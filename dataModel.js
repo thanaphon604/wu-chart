@@ -15,10 +15,7 @@ var DataSchema = new Schema({
         }
     ],
     url: String,
-    img: { 
-        data: Buffer, 
-        contentType: String 
-    }
+    imgName: String
 })
 
 var Data = mongoose.model('Data', DataSchema)
