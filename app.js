@@ -1,0 +1,51 @@
+const express = require('express')
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+const {Data} = require('./dataModel')
+
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+
+mongoose.Promise = global.Promise;
+
+mongoose.connect(process.env.MONGODB_URI ||'mongodb://localhost/serDB')
+  .then(() =>  console.log('@@@ Connection db is succes @@@'))
+  .catch((err) => console.error('!!! Fail to connect db !!!'));
+
+var app = express()
+
+app.use(bodyParser.json())
+
+app.get('/getData', (req, res) => {
+    Data.find().then((data) => {
+        res.send(data)
+    }, (e) => {
+        res.status(400).send(e)
+    })
+})
+
+app.post('/photo-upload', upload.any(), (req, res) => {
+    res.send(req.files)
+})
+
+app.post('/postData', (req, res) => {
+    let data = {
+        node: req.body.node,
+        links: req.body.links,
+        url: req.body.url
+    }
+    let newData = new Data({data})
+    newData.save().then((doc) => {
+        res.send(doc)
+    }, (e) => {
+        res.status(400).send(e)
+    })
+})
+
+app.post('/editData', (req, res) => {
+    res.send('edit')
+})
+
+app.listen(3000, () => {
+    console.log('is running on port 3000')
+})
