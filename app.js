@@ -27,17 +27,19 @@ app.get('/getData', (req, res) => {
 app.post('/submit-data', upload.any(), (req, res) => {
     let len = req.files.length
     let data = []
-    let groupLen = req.body.data.groupNumber
+    let groupLen = req.body.data.groupCount
     let groupArray = []
     let groupColorArray = []
     for(let i=0;i<groupLen;i++) {
+        console.log('g', eval('req.body.data.group'+i))
+        console.log('color', eval('req.body.data.groupColor'+i))
         groupArray.push(eval('req.body.data.group'+i))
         groupColorArray.push(eval('req.body.data.groupColor'+i))
     }
 
     let chartData = {
         chartName: req.body.data.chartName,
-        groupNumber: req.body.data.groupCount,
+        groupCount: req.body.data.groupCount,
         groupNames: groupArray,
         groupColors: groupColorArray 
     }
@@ -54,7 +56,8 @@ app.post('/submit-data', upload.any(), (req, res) => {
     }
     chartData.data = data
     //myRes = JSON.stringify(req.files)+JSON.stringify(req.body.data)
-    res.send(chartData)
+    //res.send(chartData)
+    res.send(req.body.data)
 })
 
 app.post('/postData', (req, res) => {
