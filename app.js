@@ -45,7 +45,7 @@ app.post('/photo-upload', upload.any(), (req, res) => {
             links: eval("req.body.data.link"+i),
             url: eval("req.body.data.url"+i),
             imgName: req.files[i].filename,
-            
+            groupNumber: eval('req.body.data.groupNumberInput'+i)            
         }
         data.push(obj)
     }
