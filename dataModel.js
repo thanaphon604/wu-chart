@@ -20,8 +20,8 @@ var DataSchema = new Schema({
     ],
     groupColor: [
         {
-            tyep: String,
-            required: true
+            type: String,
+            required: true   
         }
     ],
     data: [
