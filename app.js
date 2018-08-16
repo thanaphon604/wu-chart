@@ -37,7 +37,7 @@ app.post('/submit-data', upload.any(), (req, res) => {
 
     let chartData = {
         chartName: req.body.data.chartName,
-        groupNumber: req.body.data.groupNumber,
+        groupNumber: req.body.data.groupCount,
         groupNames: groupArray,
         groupColors: groupColorArray 
     }
