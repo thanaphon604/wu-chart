@@ -24,7 +24,7 @@ app.get('/getData', (req, res) => {
     })
 })
 
-app.post('/photo-upload', upload.any(), (req, res) => {
+app.post('/submit-data', upload.any(), (req, res) => {
     let len = req.files.length
     let data = []
     let groupLen = req.body.data.groupNumber
