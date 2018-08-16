@@ -28,11 +28,17 @@ app.post('/photo-upload', upload.any(), (req, res) => {
     let len = req.files.length
     let data = []
     let groupLen = req.body.data.groupNumber
-    let chartData = {}
     let groupArray = []
     for(let i=0;i<groupLen;i++) {
         groupArray.push(eval('req.body.data.group'+i))
     }
+
+    let chartData = {
+        chartName: req.body.data.chartName,
+        groupNumber: req.body.data.groupNumber,
+        groupNames: groupArray
+    }
+
     for(let i=0;i<len;i++) {
         let obj = {
             node: eval('req.body.data.node'+i),
@@ -43,8 +49,9 @@ app.post('/photo-upload', upload.any(), (req, res) => {
         }
         data.push(obj)
     }
+    chartData.data = data
     //myRes = JSON.stringify(req.files)+JSON.stringify(req.body.data)
-    res.send(req.body.data)
+    res.send(chartData)
 })
 
 app.post('/postData', (req, res) => {
