@@ -29,14 +29,17 @@ app.post('/submit-data', upload.any(), (req, res) => {
     let data = []
     let groupLen = req.body.data.groupNumber
     let groupArray = []
+    let groupColorArray = []
     for(let i=0;i<groupLen;i++) {
         groupArray.push(eval('req.body.data.group'+i))
+        groupColorArray.push(eval('req.body.data.groupColor'+i))
     }
 
     let chartData = {
         chartName: req.body.data.chartName,
         groupNumber: req.body.data.groupNumber,
-        groupNames: groupArray
+        groupNames: groupArray,
+        groupColors: groupColorArray 
     }
 
     for(let i=0;i<len;i++) {
