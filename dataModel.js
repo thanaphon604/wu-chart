@@ -32,8 +32,7 @@ var DataSchema = new Schema({
             },
             links: [
                 {
-                    type: String,
-                    required: true
+                    type: String
                 }
             ],
             url: {

@@ -31,8 +31,6 @@ app.post('/submit-data', upload.any(), (req, res) => {
     let groupArray = []
     let groupColorArray = []
     for(let i=0;i<groupLen;i++) {
-        console.log('g', eval('req.body.data.group'+i))
-        console.log('color', eval('req.body.data.groupColor'+i))
         groupArray.push(eval('req.body.data.group'+i))
         groupColorArray.push(eval('req.body.data.groupColor'+i))
     }
@@ -54,8 +52,23 @@ app.post('/submit-data', upload.any(), (req, res) => {
         }
         data.push(obj)
     }
-    chartData.data = data
+
+    //make links array from string
     
+    for(let i=0;i<len;i++) {
+        let link = []
+        let splitString = data[i].links.split(',')    
+        // console.log(splitString)
+        for(let j=0;j<splitString.length;j++) {
+            if(splitString[j]!='') {
+                link.push(splitString[j])
+            }
+        }
+        data[i].links = link        
+    }
+
+    chartData.data = data
+    console.log(chartData)
     //Save model to DB
     let newData = new Data(chartData)
     newData.save().then((doc) => {
