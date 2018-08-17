@@ -12,13 +12,13 @@ var DataSchema = new Schema({
         type: Number,
         required: true
     },
-    groupName: [
+    groupNames: [
         {
             type: String,
             required: true   
         }
     ],
-    groupColor: [
+    groupColors: [
         {
             type: String,
             required: true   

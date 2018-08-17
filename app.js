@@ -55,9 +55,17 @@ app.post('/submit-data', upload.any(), (req, res) => {
         data.push(obj)
     }
     chartData.data = data
+    
+    //Save model to DB
+    let newData = new Data(chartData)
+    newData.save().then((doc) => {
+        res.send(doc)
+    }, (e) => {
+        res.status(400).send(e)
+    })
     //myRes = JSON.stringify(req.files)+JSON.stringify(req.body.data)
-    //res.send(chartData)
-    res.send(req.body.data)
+    // res.send(chartData)
+    // res.send(req.body.data)
 })
 
 app.post('/postData', (req, res) => {
