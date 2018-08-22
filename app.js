@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const {Data} = require('./dataModel')
+var fs = require('fs')
 
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
@@ -15,6 +16,7 @@ mongoose.connect(process.env.MONGODB_URI ||'mongodb://localhost/serDB')
 var app = express()
 
 app.use(bodyParser.json())
+app.use(express.static('public'))
 
 app.get('/getData', (req, res) => {
     Data.find().then((data) => {
@@ -22,6 +24,19 @@ app.get('/getData', (req, res) => {
     }, (e) => {
         res.status(400).send(e)
     })
+})
+
+app.get('/writefile', (req, res) => {
+    let data = req.body.data
+    fs.writeFile("./public/test.html", "Hey there!", function(err) {
+        if(err) {
+            res.send(err)
+            return console.log(err);
+        }
+    
+        res.send('file is saved')
+    }); 
+    
 })
 
 app.post('/submit-data', upload.any(), (req, res) => {
@@ -44,8 +59,8 @@ app.post('/submit-data', upload.any(), (req, res) => {
 
     for(let i=0;i<len;i++) {
         let obj = {
-            node: eval('req.body.data.node'+i),
-            links: eval("req.body.data.link"+i),
+            name: eval('req.body.data.node'+i),
+            imports: eval("req.body.data.link"+i),
             url: eval("req.body.data.url"+i),
             imgName: req.files[i].filename,
             groupNumber: eval('req.body.data.groupNumberInput'+i)            
@@ -57,18 +72,27 @@ app.post('/submit-data', upload.any(), (req, res) => {
     
     for(let i=0;i<len;i++) {
         let link = []
-        let splitString = data[i].links.split(',')    
+        let splitString = data[i].imports.split(',')    
         // console.log(splitString)
         for(let j=0;j<splitString.length;j++) {
             if(splitString[j]!='') {
                 link.push(splitString[j])
             }
         }
-        data[i].links = link        
+        data[i].imports = link        
     }
-
     chartData.data = data
     console.log(chartData)
+    
+    //=========== Write Json File ==============
+    let stringData = JSON.stringify(data)
+    fs.writeFile("./chartJson/"+req.body.data.chartName+".json", stringData, function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        console.log('is made json file to db')
+    }); 
+
     //Save model to DB
     let newData = new Data(chartData)
     newData.save().then((doc) => {
@@ -79,20 +103,8 @@ app.post('/submit-data', upload.any(), (req, res) => {
     //myRes = JSON.stringify(req.files)+JSON.stringify(req.body.data)
     // res.send(chartData)
     // res.send(req.body.data)
-})
 
-app.post('/postData', (req, res) => {
-    let data = {
-        node: req.body.node,
-        links: req.body.links,
-        url: req.body.url
-    }
-    let newData = new Data({data})
-    newData.save().then((doc) => {
-        res.send(doc)
-    }, (e) => {
-        res.status(400).send(e)
-    })
+    
 })
 
 app.post('/editData', (req, res) => {

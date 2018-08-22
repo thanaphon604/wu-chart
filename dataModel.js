@@ -7,6 +7,7 @@ var DataSchema = new Schema({
         type: String,
         required: true,
         unique: true
+        // will change unique for 2 primary key!
     },
     groupCount: {
         type: Number,
@@ -26,11 +27,11 @@ var DataSchema = new Schema({
     ],
     data: [
         {
-            node: {
+            name: {
                 type: String,
                 required: true
             },
-            links: [
+            imports: [
                 {
                     type: String
                 }
