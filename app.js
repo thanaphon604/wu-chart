@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const fs = require('fs')
 const hbs = require('hbs')
-
 const {Data} = require('./dataModel')
 
 
@@ -20,7 +19,9 @@ var app = express()
 
 app.set('view engine', 'hbs')
 app.use(bodyParser.json())
-app.use(express.static('public'))
+app.use("/public", express.static(__dirname + "/public"));
+app.use("/uploads", express.static(__dirname + "/uploads"));
+app.use("/views", express.static(__dirname + "/views"));
 
 app.get('/getData', (req, res) => {
     Data.find().then((data) => {
@@ -32,9 +33,17 @@ app.get('/getData', (req, res) => {
 
 // render chart by name 
 app.get('/chart/:name', (req, res) => {
-    res.render('chart.hbs', {
-        pageTitle: req.params.name,
-        currentYear: new Date().getFullYear()
+    Data.find({chartName: req.params.name}).then((d) => {
+        console.log(d[0])
+        res.render('chart.hbs', {
+           chartName: d[0].chartName,
+           groupCount: d[0].groupCount,
+           groupNames: d[0].groupNames,
+           groupColors: d[0].groupColors,
+           data: encodeURI(JSON.stringify(d[0].data))
+        })
+    }, (e) => {
+        res.status(404).send(e)
     })
 })
 
@@ -85,7 +94,7 @@ app.post('/submit-data', upload.any(), (req, res) => {
     
     //=========== Write Json File ==============
     let stringData = JSON.stringify(data)
-    fs.writeFile("./chartJson/"+req.body.data.chartName+".json", stringData, function(err) {
+    fs.writeFile("./views/"+req.body.data.chartName+".json", stringData, function(err) {
         if(err) {
             return console.log(err);
         }

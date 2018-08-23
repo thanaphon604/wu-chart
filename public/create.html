@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <style>
+        .upload-btn-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .btn-add-image {
+            color: white;
+            font-weight: 400;
+            background-color: yellow;
+            border-radius: 0.25rem;
+            font-size: 1rem;
+            padding: 0.375rem 1.45rem;
+        }
+
+        .btn-add-image {
+            color: #212529;
+            background-color: #ffc107;
+            border-color: #ffc107;
+        }
+
+        .upload-btn-wrapper input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <hr>
+            <small class="text-muted d-block">@@@ Don't forget to press Update button. @@@</small>
+            <small class="text-muted d-block">@@@ If you won't press update button maybe your data will missing @@@</small>
+            <small class="text-muted d-block">@@@ Get some bug or Need for Info contact <span><a href="#">afumagic3@gmail.com</a></span> @@@</small>
+        <hr>
+    </div>
+    <form id="myForm" class="container my-3" method="POST" enctype="multipart/form-data" action="http://localhost:3000/submit-data">
+        <div class="form-group row">
+            <label for="ChartInput" class="col-sm-2 col-form-label">Chart Name :</label>
+            <div class="col-sm-10">
+                <input name="data[chartName]" type="text" class="form-control" id="chartInput" placeholder="Enter chart name" required>
+            </div>
+        </div>
+        <div id="group-row" class="form-group row">
+            <label for="groupInput"g class="col-sm-2 col-form-label">Number of Group :</label>
+            <div class="col-sm-4">
+                <input onchange="MakeGroupInput(this.value)" name="data[groupCount]" type="number" class="form-control" id="groupInput" placeholder="Enter number of group" required>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row mt-4">
+            <div class="col-4 col-sm-4">
+                <label class="text-center d-block bg-secondary text-white py-1 rounded">Node</label>
+                <small class="form-text text-muted">Every node is many to many.</small>
+                <small class="form-text text-muted">Example input data : project1</small>
+            </div>
+            <div class="col-8 col-sm-6">
+                <label class="text-center d-block bg-secondary text-white py-1 rounded">Link</label>
+                <small class="form-text text-muted">Every link you created is node.</small>
+                <small class="form-text text-muted">Example input data : project1,project2,project3</small>
+            </div>
+        </div>
+        <hr>
+
+        <a class="bg-success d-block text-center rounded mt-4" id="newNodeButton" data-toggle="tooltip" data-placement="top" title="Add new node"><i class="fas fa-plus p-2" style="color:white; font-size: 14px;"></i></a>
+        <button id="createButton" type="submit" class="btn btn-primary mt-5 d-block">Create Chart!</button>
+    </form>
+
+    <script>
+        var node = []
+        var member = 0
+        
+        function MakeGroupInput(val) {
+            console.log('value :', val)
+            //clear and make new one
+            $('.gg').remove()
+            let htmlString = ''
+            for(let i=0;i<val;i++) {
+                htmlString += 
+                '<div class="form-group row gg">'
+                    +'<label for="groupInput'+i+'" class="col-sm-2 col-form-label">Name of Group'+(i+1)+' :</label>'
+                    +'<div class="col-sm-4">'
+                        +'<input name="data[group'+i+']" type="text" class="form-control" id="groupInput'+i+'" placeholder="Enter name of Group" required>'
+                    +'</div>'
+                    +'<label for="groupColorInput'+i+'" class="col-sm-2 col-form-label">Color of Group'+(i+1)+' :</label>'
+                    +'<div class="col-sm-4">'
+                        +'<input name="data[groupColor'+i+']" type="text" class="form-control" id="groupColorInput'+i+'" placeholder="Enter color of Group" required>'
+                    +'</div>'
+                +'</div>'   
+            }
+            $(htmlString).insertAfter("#group-row");
+        }
+
+        function RemoveLink(id) {
+            let num = id.substring(10);
+            let nodeName = $('#nodeInput'+num).val() 
+            $('#blockAppend'+num).remove()
+            //clear node data and member
+            for(let i=0;i<node.length;i++) {
+                if(nodeName==node[i]) {
+                    node[i] = ''
+                    for(let j=i;j<node.length-1;j++) {
+                        node[j] = node[j+1] 
+                    }
+                    node.pop()
+                    console.log('now node is :', node)
+                    member--
+                    break
+                }
+            }
+        }
+
+        function UploadImage(id) {
+            let num = id.substring(8);
+            let btnID = 'btnImage'+num
+            console.log(id, 'is change')
+            $("#"+btnID).html('Change image')
+        }
+
+        function AddLink(id) {
+            //id => addLink?
+            let num = id.substring(7);
+            let nodeString = $('#nodeInput'+num).val()
+            let linksString = $('#linksInput'+num).val()
+            let links = linksString.split(",");
+
+            console.log(nodeString)
+            if(IsUniqueNode(nodeString) && nodeString!='') {
+                console.log('push self')
+                node.push(nodeString)
+            }
+
+            if(!IsLinkSameOwnNode(nodeString, links)) {
+                CreateNewNodeFromLinks(links)
+            }else {
+                alert('Your Node and Link is same name!!!')
+            }
+            
+            console.log('now node is :', node)
+            console.log('now member is :', member)
+        }
+
+        function CreateNewNodeFromLinks(links) {
+            for(let i=1;i<links.length;i++) {
+                for(let j=0;j<i;j++) {
+                    if(links[i]==links[j]) {
+                        console.log('is same')
+                        alert('Error can not input same links!!!')
+                        return
+                    }
+                }
+            }
+            for(let i=0;i<links.length;i++) {
+                if(IsUniqueNode(links[i]) && links[i]!=='') {
+                    AppendNewNode(links[i], '', '')
+                    node.push(links[i])
+                }
+            }
+        }
+
+
+        function IsLinkSameOwnNode(node, links) {
+            for(let i=0;i<links.length;i++) {
+                if(node == links[i]) {
+                    return true
+                }
+            }
+            return false
+        }
+
+        function IsUniqueNode(name) {
+            for(let i=0;i<node.length;i++) {
+                if(name==node[i]) {
+                    console.log('same btw :',name,node[i])
+                    return false
+                }
+            }
+            console.log('ttt')
+            return true
+        }
+
+        function AppendNewNode(val1, val2, val3) {
+            let appendString = 
+                '<div id="blockAppend'+member+'" class="row justify-content-md-center">'
+                    +'<div class="col-4 col-sm-4 mt-2">'
+                        +'<div class="row">'
+                            +'<div class="col">'
+                                +'<input value="'+val1+'" type="text" class="form-control nn" id="nodeInput'+member+'" name="data[node'+member+']" placeholder="Enter node name" required>'
+                            +'</div>'
+                        +'</div>'
+                        +'<div class="row">'
+                            +'<div class="col">'
+                                +'<input value="'+val3+'" type="url" class="form-control" id="urlInput'+member+'" name="data[url'+member+']" placeholder="Enter link url" required>'
+                            +'</div>'
+                        +'</div>'
+                        +'<div class="row">'
+                            +'<div class="col">'
+                                +'<input type="number" class="form-control" id="groupNumberInput'+member+'" name="data[groupNumberInput'+member+']" placeholder="Enter group number" required>'
+                            +'</div>'
+                        +'</div>'
+                    +'</div>'
+                    +'<div class="col-8 col-sm-6 mt-2">'
+                        +'<textarea name="data[link'+member+']" class="form-control ll" rows="5" id="linksInput'+member+'">'+val2+'</textarea>'
+                    +'</div>'
+                    +'<div class="col-sm-2">'
+                        +'<div class="row mt-2">'
+                            +'<div class="col">'
+                                +'<button onclick="AddLink(this.id);" id="addLink'+member+'"type="button" class="btnAddLink btn btn-success btn-block">Update</button>'
+                            +'</div>'
+                        +'</div>'
+                        +'<div class="row mt-2">'
+                            +'<div class="col">'
+                                +'<div class="upload-btn-wrapper">'
+                                    +'<button id="btnImage'+member+'" class="btn-add-image btn">Upload a image</button>'
+                                    +'<input id="addImage'+member+'" type="file" name="data[image'+member+']" onchange="UploadImage(this.id)" required/>'
+                                +'</div>'
+                            +'</div>'
+                        +'</div>'
+                        +'<div class="row mt-2">'
+                            +'<div class="col">'
+                                +'<button onclick="RemoveLink(this.id);" id="removeLink'+member+'"type="button" class="btnRemoveLink btn btn-danger btn-block">Remove</button>'
+                            +'</div>'
+                        +'</div>'
+                    +'</div>'
+                +'</div>'
+                +'<hr>'
+
+            $(appendString).insertBefore('#newNodeButton')
+            
+            member++
+        }
+
+        function CheckFormat() {
+            let nodes = $('.nn')
+            let links = $('.ll')
+
+            console.log('nodes :', nodes.length)
+            
+            //if no node
+            if(member==0) {
+                return false
+            }
+
+            //if some image is emply
+            for(let i=0;i<nodes.length;i++) {
+                if(document.getElementById("addImage"+i).files.length == 0 ){
+                    console.log('no have file')
+                    return false
+                }else {
+                    console.log('have file')
+                }
+            }
+
+            //if some url is emply
+            for(let i=0;i<nodes.length;i++) {
+                console.log('url'+i+' :', $('#urlInput'+i).val())
+                if($('#urlInput'+i).val() == '') {
+                    return false
+                }
+            }
+
+            //if groupNumberInput is not found in groupNumber
+            for(let i=0;i<$('#groupInput').val();i++) {
+                //check if group number not same ter group input
+                for(let j=0;j<nodes.length;j++) {
+                    let gn = $('#groupNumberInput'+j).val()-1
+                    if(gn < 0 || gn >= $('#groupInput').val()) {
+                        console.log('not found groupNumber input in groupNumber')
+                        return false
+                    }
+                }
+            }
+
+            //if node is same
+            for(let i=1;i<nodes.length;i++) {
+                for(let j=0;j<i;j++) {
+                    let n1 = $('#'+nodes[i].id).val() 
+                    let n2 = $('#'+nodes[j].id).val()
+                    if(n1==n2) {
+                        console.log('Error can not input same links!!!')
+                        //alert('Error can not input same links!!!')
+                        return false
+                    }
+                }
+            }
+
+            //if links is same
+            for(let i=0;i<links.length;i++) {
+                let string = $('#'+links[i].id).val()
+                let linksArray = string.split(',') 
+                for(let j=1;j<linksArray.length;j++) {
+                    for(let k=0;k<j;k++) {
+                        if(linksArray[j]==linksArray[k]) {
+                            console.log('same inside links')
+                            return false                        
+                        }
+                    } 
+                }
+            }
+
+            //if link not is a node
+            let isFound = false
+            for(let i=0;i<links.length;i++) {
+                let string = $('#'+links[i].id).val()
+                let linksArray = string.split(',')
+                if(linksArray[0]=='' && linksArray.length==1) {
+                    isFound = true
+                    console.log('stop')
+                    break
+                } 
+                for(let j=0;j<linksArray.length;j++) {
+                    isFound = false
+                    for(k=0;k<nodes.length;k++) {
+                        let n = $('#'+nodes[k].id).val() 
+                        if(n==linksArray[j]) {
+                            isFound = true
+                        }
+                    }
+                }
+            }
+            if(!isFound) {
+                console.log("not found !!!")
+                return false
+            }
+
+            //if node name is same his own link
+            for(let i=0;i<links.length;i++) {
+                let nodeString = $('#'+nodes[i].id).val()
+                let string = $('#'+links[i].id).val()
+                let linksArray = string.split(',') 
+                for(let i=0;i<linksArray.length;i++) {
+                    if(linksArray[i] == nodeString) {
+                        console.log('links same own node')
+                        return false
+                    }
+                }
+            }
+
+            //if have some emply node name
+            for(let i=0;i<nodes.length;i++) {
+                let n = $('#'+nodes[i].id).val()
+                if(n==='') {
+                    console.log('is emply field')
+                    return false
+                }
+            }
+
+            //console.log('links :', links)
+            return true
+        }
+
+
+        $(document).ready(function() {
+            
+            $('#newNodeButton').on('click', function() {
+                AppendNewNode('', '', '')
+            })
+
+            $('#myForm').submit(function() {
+                if(CheckFormat()) {
+                    alert('Chart is created Success')
+                    return true ;
+                }
+                alert('Can not create, Watch your data or images and reCreate!')
+                return false
+            })
+            
+        })
+
+    </script>
+</body>
+</html>
