@@ -1,8 +1,11 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const fs = require('fs')
+const hbs = require('hbs')
+
 const {Data} = require('./dataModel')
-var fs = require('fs')
+
 
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
@@ -15,6 +18,7 @@ mongoose.connect(process.env.MONGODB_URI ||'mongodb://localhost/serDB')
 
 var app = express()
 
+app.set('view engine', 'hbs')
 app.use(bodyParser.json())
 app.use(express.static('public'))
 
@@ -26,17 +30,12 @@ app.get('/getData', (req, res) => {
     })
 })
 
-app.get('/writefile', (req, res) => {
-    let data = req.body.data
-    fs.writeFile("./public/test.html", "Hey there!", function(err) {
-        if(err) {
-            res.send(err)
-            return console.log(err);
-        }
-    
-        res.send('file is saved')
-    }); 
-    
+// render chart by name 
+app.get('/chart/:name', (req, res) => {
+    res.render('chart.hbs', {
+        pageTitle: req.params.name,
+        currentYear: new Date().getFullYear()
+    })
 })
 
 app.post('/submit-data', upload.any(), (req, res) => {
@@ -105,10 +104,6 @@ app.post('/submit-data', upload.any(), (req, res) => {
     // res.send(req.body.data)
 
     
-})
-
-app.post('/editData', (req, res) => {
-    res.send('edit')
 })
 
 app.listen(3000, () => {
