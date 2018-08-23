@@ -135,21 +135,24 @@
                 let _2nodeColor = '#00ffff'; 
 
                 let myNodes = document.getElementsByClassName('node')
-                console.log('myNode:', myNodes)
                 for(let i=0;i<classes.length;i++) {
                     let gNo = classes[i].groupNumber
                     myNodes[i].classList.add(""+gNo)
-                    console.log('zz', myNodes[i].classList)
                 }
 
-                $(".node").css("fill", _1nodeColor);
+                for(let i=0;i<groupCount;i++) {
+                    $('.'+(i+1)).css('fill', "red")
+                    console.log(groupColors[i])
+                }
+
+                {{!-- $(".node").css("fill", "#9b59b6"); --}}
                 $(".node").css("font-size", fSize+"px");
                 $(".node").css("cursor", "pointer");
-                $(".node").hover(function() {
+                {{!-- $(".node").hover(function() {
                     $(this).css("fill", _2nodeColor)
                 }, function() {
                     $(this).css("fill", _1nodeColor)
-                });
+                }); --}}
                 
             })
 
