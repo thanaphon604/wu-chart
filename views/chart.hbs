@@ -128,6 +128,32 @@
                 .on("mouseout", mouseouted);
 
 
+            $(document).ready(function() {
+                
+                let fSize = 11 ;
+                let _1nodeColor = '#ffff00'; 
+                let _2nodeColor = '#00ffff'; 
+
+                let myNodes = document.getElementsByClassName('node')
+                console.log('myNode:', myNodes)
+                for(let i=0;i<classes.length;i++) {
+                    let gNo = classes[i].groupNumber
+                    myNodes[i].classList.add(""+gNo)
+                    console.log('zz', myNodes[i].classList)
+                }
+
+                $(".node").css("fill", _1nodeColor);
+                $(".node").css("font-size", fSize+"px");
+                $(".node").css("cursor", "pointer");
+                $(".node").hover(function() {
+                    $(this).css("fill", _2nodeColor)
+                }, function() {
+                    $(this).css("fill", _1nodeColor)
+                });
+                
+            })
+
+
         });
 
         function mouseovered(d) {
