@@ -95,13 +95,13 @@
 </head>
 <body>
     <div id="description">
-        <h3 id="main-title">WU-SER INNOVATION CHART</h3>
-        <ul style="margin-top: 15px;">
-            <li style="color: #f39c12;"><span style="color: #f39c12;">■</span>Academic Staff</li>
+        <h3 id="main-title"></h3>
+        <ul id="group-list" style="margin-top: 15px;">
+            {{!-- <li style="color: #f39c12;"><span style="color: #f39c12;">■</span>Academic Staff</li>
             <li style="color: #92D050;"><span style="color: #92D050;">■</span>Environment</li>
             <li style="color: #FFFF66;"><span style="color: #FFFF66;">■</span>Industry</li>
             <li style="color: #99CCFF;"><span style="color: #99CCFF;">■</span>Materials</li>
-            <li style="color: #FF99FF;"><span style="color: #FF99FF;">■</span>Smart City</li>
+            <li style="color: #FF99FF;"><span style="color: #FF99FF;">■</span>Smart City</li> --}}
         </ul>
     </div>
 
@@ -120,6 +120,15 @@
         console.log('groupColors:', groupColors)
         console.log('groupNames:', groupNames)
         console.log('data:', data)
+
+        $(document).ready(function() {
+            $('#main-title').html(chartName)
+            let stringList = ''
+            for(let i=0;i<groupCount;i++) {
+                stringList += '<li style="color: '+groupColors[i]+';"><span style="color: '+groupColors[i]+';">■</span>'+groupNames[i]+'</li>'
+            }
+            $('#group-list').html(stringList)
+        })
 
         let circleSize = 120 
         var diameter = 960,
@@ -198,14 +207,8 @@
                     });
                 }
 
-                {{!-- $(".node").css("fill", "#9b59b6"); --}}
                 $(".node").css("font-size", fSize+"px");
                 $(".node").css("cursor", "pointer");
-                {{!-- $(".node").hover(function() {
-                    $(this).css("fill", _2nodeColor)
-                }, function() {
-                    $(this).css("fill", _1nodeColor)
-                }); --}}
                 
             })
 
