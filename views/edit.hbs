@@ -62,7 +62,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="ChartInput" class="col-sm-2 col-form-label">Chart Name :</label>
+            <label for="chartInput" class="col-sm-2 col-form-label">Chart Name :</label>
             <div class="col-sm-10">
                 <input name="data[chartName]" type="text" class="form-control" id="chartInput" placeholder="Enter chart name" required>
             </div>
@@ -94,6 +94,27 @@
     </form>
 
     <script>
+
+        let chartName = "{{chartName}}";
+        let groupCount = {{groupCount}};
+        let groupColors = "{{groupColors}}";
+        let groupNames = "{{groupNames}}";
+        let fontSize = {{fontSize}};
+        let circleSize = {{circleSize}};
+        let data = "{{data}}";
+        data = JSON.parse(decodeURI(data))
+        groupColors = JSON.parse(decodeURI(groupColors))
+        groupNames = JSON.parse(decodeURI(groupNames))
+        
+        console.log('chartName:', chartName)
+        console.log('groupCount:', groupCount)
+        console.log('groupColors:', groupColors)
+        console.log('groupNames:', groupNames)
+        console.log('fontSize:', fontSize)
+        console.log('circleSize:', circleSize)
+        console.log('data:', data)
+
+
         var node = []
         var member = 0
         
@@ -379,6 +400,25 @@
             return true
         }
 
+        function SetLastData(data) {
+            $('#fontInput').val(data.fontSize)
+            $('#circleInput').val(data.circleSize)
+            $('#chartInput').val(data.chartName)
+            $('#groupInput').val(data.groupCount)
+            MakeGroupInput(data.groupCount)
+            for(let i=0;i<data.groupCount;i++) {
+                console.log('zz', data.groupNames[i])
+                console.log('yy', data.groupColors[i])
+                $('#groupInput'+i).val(data.groupNames[i])
+                $('#groupColorInput'+i).val(data.groupColors[i])
+            }
+
+            for(let i=0;i<data.data.length;i++) {
+                ///AppendNewNode()
+            /////////////////////////////////////
+            }
+        }
+
 
         $(document).ready(function() {
             
@@ -394,6 +434,11 @@
                 alert('Can not create, Watch your data or images and reCreate!')
                 return false
             })
+            
+            let allData = {
+                chartName, groupCount, groupColors, groupNames, fontSize, circleSize, data
+            }
+            SetLastData(allData)
             
         })
 

@@ -44,7 +44,20 @@ app.get('/edit', (req, res) => {
 })
 
 app.get('/edit/:name', (req, res) => {
-    res.send(req.params.name)
+    Data.find({chartName: req.params.name}).then((d) => {
+        console.log(d[0])
+        res.render('edit.hbs', {
+           chartName: d[0].chartName,
+           groupCount: d[0].groupCount,
+           fontSize: d[0].fontSize,
+           circleSize: d[0].circleSize,
+           groupNames: encodeURI(JSON.stringify(d[0].groupNames)),
+           groupColors: encodeURI(JSON.stringify(d[0].groupColors)),
+           data: encodeURI(JSON.stringify(d[0].data))
+        })
+    }, (e) => {
+        res.status(404).send(e)
+    })
 })
 
 // render chart by name 
