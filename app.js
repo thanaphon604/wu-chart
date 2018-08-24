@@ -19,7 +19,7 @@ var app = express()
 
 app.set('view engine', 'hbs')
 app.use(bodyParser.json())
-app.use("/public", express.static(__dirname + "/public"));
+app.use("/", express.static(__dirname + "/public"));
 app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use("/views", express.static(__dirname + "/views"));
 

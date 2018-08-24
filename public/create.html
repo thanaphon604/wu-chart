@@ -158,7 +158,7 @@
             }
 
             if(!IsLinkSameOwnNode(nodeString, links)) {
-                CreateNewNodeFromLinks(links)
+                CreateNewNodeFromLinks(links, nodeString)
             }else {
                 alert('Your Node and Link is same name!!!')
             }
@@ -167,7 +167,10 @@
             console.log('now member is :', member)
         }
 
-        function CreateNewNodeFromLinks(links) {
+        function CreateNewNodeFromLinks(links, val) {
+            if(!val) {
+                val = ''
+            }
             for(let i=1;i<links.length;i++) {
                 for(let j=0;j<i;j++) {
                     if(links[i]==links[j]) {
@@ -179,7 +182,7 @@
             }
             for(let i=0;i<links.length;i++) {
                 if(IsUniqueNode(links[i]) && links[i]!=='') {
-                    AppendNewNode(links[i], '', '')
+                    AppendNewNode(links[i], val, '')
                     node.push(links[i])
                 }
             }
