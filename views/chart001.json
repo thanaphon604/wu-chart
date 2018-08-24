@@ -6,7 +6,7 @@
       ],
       "_id": "5b7ea2f906588b01a45f549e",
       "name": "teacher1",
-      "url": "https://www.google.co.th/",
+      "url": "https://www.google.co.th/teacher1",
       "imgName": "9efe1c21836c0b1364eb14751223246b",
       "groupNumber": 1
     },
@@ -17,7 +17,7 @@
       ],
       "_id": "5b7ea2f906588b01a45f549d",
       "name": "project1",
-      "url": "https://www.google.co.th/",
+      "url": "https://www.google.co.th/project1",
       "imgName": "7d47184211a728a84bd0c36ed27730af",
       "groupNumber": 2
     },
@@ -27,7 +27,7 @@
       ],
       "_id": "5b7ea2f906588b01a45f549c",
       "name": "project2",
-      "url": "https://www.google.co.th/",
+      "url": "https://www.google.co.th/project2",
       "imgName": "61f368d26ca35d60186c0238521f0707",
       "groupNumber": 2
     },
@@ -38,7 +38,7 @@
       ],
       "_id": "5b7ea2f906588b01a45f549b",
       "name": "teacher2",
-      "url": "https://www.google.co.th/",
+      "url": "https://www.google.co.th/teacher2",
       "imgName": "b08d3b6583d89f6a24562fcf0649acf0",
       "groupNumber": 1
     }

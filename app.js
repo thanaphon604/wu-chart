@@ -38,6 +38,8 @@ app.get('/chart/:name', (req, res) => {
         res.render('chart.hbs', {
            chartName: d[0].chartName,
            groupCount: d[0].groupCount,
+           fontSize: d[0].fontSize,
+           circleSize: d[0].circleSize,
            groupNames: encodeURI(JSON.stringify(d[0].groupNames)),
            groupColors: encodeURI(JSON.stringify(d[0].groupColors)),
            data: encodeURI(JSON.stringify(d[0].data))
@@ -62,7 +64,9 @@ app.post('/submit-data', upload.any(), (req, res) => {
         chartName: req.body.data.chartName,
         groupCount: req.body.data.groupCount,
         groupNames: groupArray,
-        groupColors: groupColorArray 
+        groupColors: groupColorArray,
+        circleSize: req.body.data.circleSize,
+        fontSize: req.body.data.fontSize
     }
 
     for(let i=0;i<len;i++) {

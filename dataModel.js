@@ -9,6 +9,14 @@ var DataSchema = new Schema({
         unique: true
         // will change unique for 2 primary key!
     },
+    fontSize: {
+        type: Number,
+        required: true
+    },
+    circleSize: {
+        type: Number,
+        required: true
+    },
     groupCount: {
         type: Number,
         required: true
