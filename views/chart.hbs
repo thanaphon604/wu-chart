@@ -100,9 +100,8 @@
             border-radius: 8px;
             display: none;
             overflow: hidden;
-            background-size: cover;
+            background-size: 100% 360px;
             background-position: center;
-            background-image: url('https://wallpaper.wiki/wp-content/uploads/2017/05/wallpaper.wiki-Nature-Pictures-1080p-PC-PIC-WPE0014447.jpg')
         }
 
     </style>
@@ -118,8 +117,8 @@
     <div id="myPopup">
         <div style="display: flex; flex-direction: column; align-items: flex-end;">
             <div style="display: flex">
-                <i id="openDocBtn" onclick="openDoc()" style="padding: 6px; color: #43A047;" class="fas fa-file-alt"></i>
-                <i id="exitBtn" onclick="closePopup()" style="padding: 6px; color: red;" class="far fa-times-circle"></i>
+                <i id="openDocBtn" onclick="openDoc()" style="font-size: 25px; padding: 6px; color: #43A047;" class="fas fa-file-alt"></i>
+                <i id="exitBtn" onclick="closePopup()" style="font-size: 25px; padding: 6px; color: red;" class="far fa-times-circle"></i>
             </div>
         </div>
     </div>
@@ -243,6 +242,8 @@
                     $('#myPopup').css("display", "unset")
                     $('#myPopup').attr("data-url", url)
                     $('#myPopup').attr("data-img", imgName)
+                    let urlString = 'url("http://localhost:3000/uploads/'+imgName+'")'
+                    $('#myPopup').css("background-image", urlString)
                 })
                 
             })
