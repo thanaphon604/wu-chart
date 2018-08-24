@@ -9,6 +9,9 @@
     
     <title>{{chartName}}</title>
     <style>
+        body {
+            background-color: rgb(58, 58, 58);
+        }
         .node {
             font: 300 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
             fill: #bbb;
@@ -53,13 +56,54 @@
             stroke: #d62728;
         }
 
+        #description{
+            background-color: #f3f3f3;
+            position: absolute;
+            top: 5%;
+            width:20em;
+            height:20em;
+            margin-left: -30px;
+            background-color: rgb(58, 58, 58);
+        }
+
+        #description ul li {
+            font-size: 24px;
+            line-height: 32px;
+            color: rgb(255, 255, 255, 0.8);
+            list-style-type: none ;
+            margin-top: 6px;
+        }
+
+        #description ul li span {
+            font-size: 60px;
+            line-height: 32px;
+            font-weight: lighter;
+            padding-right: 8px;
+            margin-top: 4px;
+        }
+
+        #main-title{
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            padding-left: 40px;
+            margin-bottom: 0px;
+        }
+
     </style>
 
 </head>
 <body>
-    <div>
-        
-    </div>    
+    <div id="description">
+        <h3 id="main-title">WU-SER INNOVATION CHART</h3>
+        <ul style="margin-top: 15px;">
+            <li style="color: #f39c12;"><span style="color: #f39c12;">■</span>Academic Staff</li>
+            <li style="color: #92D050;"><span style="color: #92D050;">■</span>Environment</li>
+            <li style="color: #FFFF66;"><span style="color: #FFFF66;">■</span>Industry</li>
+            <li style="color: #99CCFF;"><span style="color: #99CCFF;">■</span>Materials</li>
+            <li style="color: #FF99FF;"><span style="color: #FF99FF;">■</span>Smart City</li>
+        </ul>
+    </div>
 
     <script>
         let chartName = "{{chartName}}";
@@ -147,6 +191,11 @@
                 for(let i=0;i<groupCount;i++) {
                     $('.'+(i+1)).css('fill', groupColors[i])
                     console.log(groupColors[i])
+                    $("."+(i+1)).hover(function() {
+                        $(this).css("fill", '#fff')
+                    }, function() {
+                        $(this).css("fill", groupColors[i])
+                    });
                 }
 
                 {{!-- $(".node").css("fill", "#9b59b6"); --}}
