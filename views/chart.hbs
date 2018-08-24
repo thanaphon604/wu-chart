@@ -6,7 +6,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <title>{{chartName}}</title>
     <style>
         body {
@@ -57,12 +57,10 @@
         }
 
         #description{
-            background-color: #f3f3f3;
+            display: flex;
+            flex-direction: column;
             position: absolute;
             top: 5%;
-            width:20em;
-            height:20em;
-            margin-left: -30px;
             background-color: rgb(58, 58, 58);
         }
 
@@ -90,6 +88,19 @@
             margin-bottom: 0px;
         }
 
+        #myPopup {
+            position: fixed;
+            width: 55%;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 3px solid #000;
+            border-radius: 8px;
+            display: none;
+        }
+
     </style>
 
 </head>
@@ -97,12 +108,16 @@
     <div id="description">
         <h3 id="main-title"></h3>
         <ul id="group-list" style="margin-top: 15px;">
-            {{!-- <li style="color: #f39c12;"><span style="color: #f39c12;">■</span>Academic Staff</li>
-            <li style="color: #92D050;"><span style="color: #92D050;">■</span>Environment</li>
-            <li style="color: #FFFF66;"><span style="color: #FFFF66;">■</span>Industry</li>
-            <li style="color: #99CCFF;"><span style="color: #99CCFF;">■</span>Materials</li>
-            <li style="color: #FF99FF;"><span style="color: #FF99FF;">■</span>Smart City</li> --}}
         </ul>
+    </div>
+
+    <div id="myPopup">
+        <div style="display: flex; flex-direction: column; align-items: flex-end;">
+            <div style="display: flex">
+                <i id="openDocBtn" onclick="openDoc()" style="padding: 6px; color: #43A047;" class="fas fa-file-alt"></i>
+                <i id="exitBtn" onclick="closePopup()" style="padding: 6px; color: red;" class="far fa-times-circle"></i>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -209,6 +224,22 @@
 
                 $(".node").css("font-size", fSize+"px");
                 $(".node").css("cursor", "pointer");
+
+                let allNode = document.getElementsByClassName('node')
+                for(let i=0;i<allNode.length;i++) {
+                    allNode[i].setAttribute("data-url", classes[i].url)
+                    allNode[i].setAttribute("data-img", classes[i].imgName)
+                    console.log('url'+i+':', classes[i].url)
+                    console.log('img'+i+':', classes[i].imgName)
+                }
+
+                $(".node").on('click', function() {
+                    let url = $(this).attr("data-url")
+                    let imgName = $(this).attr("data-img")
+                    $('#myPopup').css("display", "unset")
+                    $('#myPopup').attr("data-url", url)
+                    $('#myPopup').attr("data-img", imgName)
+                })
                 
             })
 
@@ -278,6 +309,16 @@
                 });
             });
             return imports;
+        }
+
+        $("#exitBtn").css("cursor", "pointer");
+        $("#openDocBtn").css("cursor", "pointer");
+        function closePopup() {
+            $('#myPopup').css("display", "none")
+        }
+        function openDoc() {
+            let url = $('#myPopup').attr("data-url")
+            window.open(url)
         }
     </script>
 </body>
