@@ -64,13 +64,17 @@
     <script>
         let chartName = "{{chartName}}";
         let groupCount = {{groupCount}};
-        let groupColors = ["{{groupColors}}"];
+        let groupColors = "{{groupColors}}";
+        let groupNames = "{{groupNames}}";
         let data = "{{data}}";
         data = JSON.parse(decodeURI(data))
+        groupColors = JSON.parse(decodeURI(groupColors))
+        groupNames = JSON.parse(decodeURI(groupNames))
         
         console.log('chartName:', chartName)
         console.log('groupCount:', groupCount)
         console.log('groupColors:', groupColors)
+        console.log('groupNames:', groupNames)
         console.log('data:', data)
 
         let circleSize = 120 
@@ -141,7 +145,7 @@
                 }
 
                 for(let i=0;i<groupCount;i++) {
-                    $('.'+(i+1)).css('fill', "red")
+                    $('.'+(i+1)).css('fill', groupColors[i])
                     console.log(groupColors[i])
                 }
 

@@ -38,8 +38,8 @@ app.get('/chart/:name', (req, res) => {
         res.render('chart.hbs', {
            chartName: d[0].chartName,
            groupCount: d[0].groupCount,
-           groupNames: d[0].groupNames,
-           groupColors: d[0].groupColors,
+           groupNames: encodeURI(JSON.stringify(d[0].groupNames)),
+           groupColors: encodeURI(JSON.stringify(d[0].groupColors)),
            data: encodeURI(JSON.stringify(d[0].data))
         })
     }, (e) => {
