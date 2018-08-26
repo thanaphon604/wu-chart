@@ -154,7 +154,9 @@
             console.log(nodeString)
             if(IsUniqueNode(nodeString) && nodeString!='') {
                 console.log('push self')
-                node.push(nodeString)
+                if(node.indexOf(nodeString)==-1) {
+                    node.push(nodeString)
+                }
             }
 
             if(!IsLinkSameOwnNode(nodeString, links)) {
@@ -165,6 +167,44 @@
             
             console.log('now node is :', node)
             console.log('now member is :', member)
+
+            //if this link is already have in node 
+            //but node from this link don't have yet in node  
+            console.log('this node name is', nodeString)
+            console.log('this links is', links)
+            let isSameOwn = false
+            for(let i=0;i<links.length;i++) {
+                if(nodeString==links[i]) {
+                    isSameOwn = true
+                }
+            }
+            if(isSameOwn) { // do noting
+
+            }else { // find another node by links 
+                for(let i=0;i<links.length;i++) {
+                    for(let j=0;j<node.length;j++) {
+                        if(links[i]==node[j] && nodeString!=node[j]) { // found and not have yet do it
+                            // check in links from node found is not have yet
+                            // Get links by node name
+                            let valLinks = $('#linksInput'+j).val()
+                            console.log('valLinks :',valLinks)
+                            let valLinksArray = valLinks.split(',')
+                            // not found in link
+                            let isFoundInLink = false
+                            for(let x=0;x<valLinksArray.length;x++) {
+                                if(nodeString==valLinksArray[x]) { // own node
+                                    isFoundInLink = true
+                                }
+                            }
+                            if(!isFoundInLink) {
+                                // push it !
+                                $('#linksInput'+j).val(valLinks+','+nodeString)
+                                console.log('is push :', nodeString+' to node '+node[j])
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         function CreateNewNodeFromLinks(links, val) {
@@ -183,7 +223,9 @@
             for(let i=0;i<links.length;i++) {
                 if(IsUniqueNode(links[i]) && links[i]!=='') {
                     AppendNewNode(links[i], val, '')
-                    node.push(links[i])
+                    if(node.indexOf(links[i])==-1) {
+                        node.push(links[i])
+                    }
                 }
             }
         }

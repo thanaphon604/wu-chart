@@ -204,7 +204,7 @@
             }else { // find another node by links 
                 for(let i=0;i<links.length;i++) {
                     for(let j=0;j<node.length;j++) {
-                        if(links[i]==node[j]) { // found and not have yet do it
+                        if(links[i]==node[j] && nodeString!=node[j]) { // found and not have yet do it
                             // check in links from node found is not have yet
                             // Get links by node name
                             let valLinks = $('#linksInput'+j).val()
