@@ -303,8 +303,8 @@
 
             //if some image is emply
             {{!-- for(let i=0;i<nodes.length;i++) {
-                if(document.getElementById("addImage"+i).files.length == 0 ){
-                    console.log('no have file')
+                if(document.getElementById("addImage"+i).files.length == 0 || document.getElementById("addImage"+i).value == ''){
+                    console.log('no have file image')
                     return false
                 }else {
                     console.log('have file')

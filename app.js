@@ -179,6 +179,14 @@ app.post('/edit-data', upload.any(), (req, res) => {
             let newD = new Data(Chart_Data)
             newD.save().then((doc) => {
                 console.log('is saved', doc)
+                fs.unlinkSync('./views/'+Chart_Data.chartName+'.json')
+                fs.writeFile("./views/"+Chart_Data.chartName+".json", JSON.stringify(Chart_Data.data), function(err) {
+
+                    if(err) {
+                        return console.log(err);
+                    }
+                    console.log('is made json file to db')
+                }); 
             }, (e) => {
                 console.log('can not save', e)
             })
