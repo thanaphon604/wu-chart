@@ -48,7 +48,7 @@
             <small class="text-muted d-block">@@@ Get some bug or Need for Info contact <span><a href="#">afumagic3@gmail.com</a></span> @@@</small>
         <hr>
     </div>
-    <form id="myForm" class="container my-3" method="POST" enctype="multipart/form-data" action="http://localhost:3000/submit-data">
+    <form id="myForm" class="container my-3" method="POST" enctype="multipart/form-data" action="http://localhost:3000/edit-data">
         <div class="form-group row">
             <label for="fontInput" class="col-sm-2 col-form-label">Font Size : </label>
             <div class="col-sm-10">
@@ -230,7 +230,16 @@
             return true
         }
 
-        function AppendNewNode(val1, val2, val3) {
+        function AppendNewNode(val1, val2, val3, mem, pic, gNo) {
+            let imgBtnString = 'Upload a Image'
+            let isRequiredImg = ' required'
+            if(mem != '') {
+                member = mem
+            }
+            if(pic != '') {
+                imgBtnString = 'Change Image'
+                isRequiredImg = ''
+            }
             let appendString = 
                 '<div id="blockAppend'+member+'" class="row justify-content-md-center">'
                     +'<div class="col-4 col-sm-4 mt-2">'
@@ -246,7 +255,7 @@
                         +'</div>'
                         +'<div class="row">'
                             +'<div class="col">'
-                                +'<input type="number" class="form-control" id="groupNumberInput'+member+'" name="data[groupNumberInput'+member+']" placeholder="Enter group number" required>'
+                                +'<input value="'+gNo+'" type="number" class="form-control" id="groupNumberInput'+member+'" name="data[groupNumberInput'+member+']" placeholder="Enter group number" required>'
                             +'</div>'
                         +'</div>'
                     +'</div>'
@@ -262,8 +271,8 @@
                         +'<div class="row mt-2">'
                             +'<div class="col">'
                                 +'<div class="upload-btn-wrapper">'
-                                    +'<button id="btnImage'+member+'" class="btn-add-image btn">Upload a image</button>'
-                                    +'<input id="addImage'+member+'" type="file" name="data[image'+member+']" onchange="UploadImage(this.id)" required/>'
+                                    +'<button id="btnImage'+member+'" class="btn-add-image btn">'+imgBtnString+'</button>'
+                                    +'<input id="addImage'+member+'" type="file" name="data[image'+member+']" onchange="UploadImage(this.id)" value="'+pic+'" '+isRequiredImg+'/>'
                                 +'</div>'
                             +'</div>'
                         +'</div>'
@@ -293,14 +302,14 @@
             }
 
             //if some image is emply
-            for(let i=0;i<nodes.length;i++) {
+            {{!-- for(let i=0;i<nodes.length;i++) {
                 if(document.getElementById("addImage"+i).files.length == 0 ){
                     console.log('no have file')
                     return false
                 }else {
                     console.log('have file')
                 }
-            }
+            } --}}
 
             //if some url is emply
             for(let i=0;i<nodes.length;i++) {
@@ -414,8 +423,20 @@
             }
 
             for(let i=0;i<data.data.length;i++) {
-                ///AppendNewNode()
-            /////////////////////////////////////
+                {{!-- AppendNewNode(node, link, url) --}}
+                let node_name = data.data[i].name
+                let link_url = data.data[i].url
+                let all_link = data.data[i].imports
+                let group_number = data.data[i].groupNumber
+                let stringAllLink = ''
+                let urlImage = 'http://localhost:3000/uploads/'+data.data[i].imgName
+                for(let j=0;j<all_link.length;j++) {
+                    stringAllLink += (all_link[j] + ',')
+                }
+                stringAllLink = stringAllLink.slice(0, -1)
+                
+                AppendNewNode(node_name, stringAllLink, link_url, i, urlImage, group_number)
+
             }
         }
 
@@ -423,7 +444,7 @@
         $(document).ready(function() {
             
             $('#newNodeButton').on('click', function() {
-                AppendNewNode('', '', '')
+                AppendNewNode('', '', '', '', '', '')
             })
 
             $('#myForm').submit(function() {

@@ -78,6 +78,60 @@ app.get('/chart/:name', (req, res) => {
     })
 })
 
+app.post('/edit-data', upload.any(), (req, res) => {
+    let imageData = []
+    let count = 0
+    while(eval('req.body.data.node'+count)!=undefined) {
+        // console.log('data is ', eval('req.body.data.node'+count))
+        count++
+    }
+    console.log('count is ', count)
+
+    Data.find({chartName: req.body.data.chartName}).then((d) => {
+        let imgArray = []
+        for(let i=0;i<count;i++) {
+            let curName = eval('req.body.data.node'+i)
+            // find old pic by curName
+            let oldPic = ''
+            for(let j=0;j<d[0].data.length;j++) {
+                if(d[0].data[j].name == curName) {
+                    oldPic = d[0].data[j].imgName
+                    break
+                }
+            }
+            imgArray.push(oldPic) // old pic
+        }
+        console.log('imgArray before', imgArray)
+        // got oldPic now get newPic and set to array
+
+        for(let i=0;i<req.files.length;i++) {
+            let curImgName = '' + req.files[i].filename
+            let curImgFieldName = '' + req.files[i].fieldname
+            let curPos = curImgFieldName.substring(curImgFieldName.indexOf('e')+1, curImgFieldName.indexOf(']'))
+            curPos = parseInt(curPos)
+
+            // console.log('filedname: ', curImgFieldName)
+            // console.log('pos is :', curPos)
+            let d = {
+                imgName: curImgName,
+                index: curPos
+            }
+            // push newNew in imgArray
+            imgArray[d.index] = d.imgName
+            // console.log('d :', d)
+        }
+        console.log('=================================')
+        console.log('imgArray after', imgArray)
+
+    }, (e) => {
+
+    })
+
+    
+    
+    res.send(req.files)
+})
+
 app.post('/submit-data', upload.any(), (req, res) => {
     let len = req.files.length
     let data = []
@@ -127,7 +181,9 @@ app.post('/submit-data', upload.any(), (req, res) => {
     
     //=========== Write Json File ==============
     let stringData = JSON.stringify(data)
+    // sort before save @@@@
     fs.writeFile("./views/"+req.body.data.chartName+".json", stringData, function(err) {
+
         if(err) {
             return console.log(err);
         }
@@ -143,7 +199,7 @@ app.post('/submit-data', upload.any(), (req, res) => {
     })
     //myRes = JSON.stringify(req.files)+JSON.stringify(req.body.data)
     // res.send(chartData)
-    // res.send(req.body.data)
+    res.send(req.body.data)
 
     
 })
