@@ -87,15 +87,19 @@ app.post('/edit-data', upload.any(), (req, res) => {
     }
     console.log('count is ', count)
 
-    Data.find({chartName: req.body.data.chartName}).then((d) => {
+    Data.find({chartName: req.body.data.chartName}, function(err, dd) {
+        if(err) {
+            res.status(400).send(err)
+            return console.log('not found is Data')
+        }
         let imgArray = []
         for(let i=0;i<count;i++) {
             let curName = eval('req.body.data.node'+i)
             // find old pic by curName
             let oldPic = ''
-            for(let j=0;j<d[0].data.length;j++) {
-                if(d[0].data[j].name == curName) {
-                    oldPic = d[0].data[j].imgName
+            for(let j=0;j<dd[0].data.length;j++) {
+                if(dd[0].data[j].name == curName) {
+                    oldPic = dd[0].data[j].imgName
                     break
                 }
             }
@@ -123,13 +127,67 @@ app.post('/edit-data', upload.any(), (req, res) => {
         console.log('=================================')
         console.log('imgArray after', imgArray)
 
-    }, (e) => {
+        //Clear old data and save new data 
+        
+        let groupLen = req.body.data.groupCount
+        let groupColorsArray = []
+        let groupNamesArray = []
+        let data_all = []
+        for(let i=0;i<groupLen;i++) {
+            groupColorsArray.push(eval('req.body.data.groupColor'+i))
+            groupNamesArray.push(eval('req.body.data.group'+i))
+        }
+        let Chart_Data = {
+            chartName: req.body.data.chartName,
+            fontSize: req.body.data.fontSize,
+            circleSize: req.body.data.circleSize,
+            groupCount: req.body.data.groupCount,
+            groupNames: groupNamesArray,
+            groupColors: groupColorsArray
+        }
 
+        //count is len all of new data
+        for(let i=0;i<count;i++) {
+            let obj = {
+                name: eval('req.body.data.node'+i),
+                imports: eval("req.body.data.link"+i),
+                url: eval("req.body.data.url"+i),
+                imgName: imgArray[i],
+                groupNumber: eval('req.body.data.groupNumberInput'+i)            
+            }
+            data_all.push(obj)
+        }
+
+        //make links array from string
+    
+        for(let i=0;i<count;i++) {
+            let link = []
+            let splitString = data_all[i].imports.split(',')
+            // console.log(splitString)
+            for(let j=0;j<splitString.length;j++) {
+                if(splitString[j]!='') {
+                    link.push(splitString[j])
+                }
+            }
+            data_all[i].imports = link        
+        }
+        Chart_Data.data = data_all
+        
+        // console.log('Chart_data : ', Chart_Data)
+
+        Data.remove({chartName: Chart_Data.chartName}).then(() => {
+            let newD = new Data(Chart_Data)
+            newD.save().then((doc) => {
+                console.log('is saved', doc)
+            }, (e) => {
+                console.log('can not save', e)
+            })
+        })
+        res.send(req.body.data)
     })
-
     
+    // res.send(req.files)
     
-    res.send(req.files)
 })
 
 app.post('/submit-data', upload.any(), (req, res) => {
