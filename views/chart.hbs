@@ -62,7 +62,7 @@
             position: absolute;
             top: 5%;
             right: 0;
-            margin-right: 20px;
+            margin-right: 35px;
             background-color: rgb(58, 58, 58);
         }
 
@@ -98,7 +98,7 @@
             z-index: 100;
             position: fixed;
             width: 60%;
-            height: 350px;
+            height: 367px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -154,6 +154,9 @@
             $('#main-title').html(chartName)
             let stringList = ''
             for(let i=0;i<groupCount;i++) {
+                if(groupNames[i].charAt(0)=='!') {
+                    groupNames[i] = groupNames[i].substr(1)
+                }
                 stringList += '<li style="color: '+groupColors[i]+';"><span style="color: '+groupColors[i]+';">■</span>'+groupNames[i]+'</li>'
             }
             $('#group-list').html(stringList)
@@ -257,7 +260,7 @@
                     $('#myPopup').css("background-image", urlString)
                 })
 
-                $('svg').center()
+                {{!-- $('svg').center() --}}
                 
             })
 

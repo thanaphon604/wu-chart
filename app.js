@@ -180,7 +180,14 @@ app.post('/edit-data', upload.any(), (req, res) => {
             newD.save().then((doc) => {
                 console.log('is saved', doc)
                 fs.unlinkSync('./views/'+Chart_Data.chartName+'.json')
-                let _d = SortData(Chart_Data.data, Chart_Data.groupCount)
+                lastNameNumber = []
+                for(let i=0;i<Chart_Data.groupCount;i++) {
+                    if(Chart_Data.groupNames[i].charAt(0) == '!') {
+                        lastNameNumber.push(i)
+                    }
+                }
+            
+                let _d = SortData(Chart_Data.data, Chart_Data.groupCount, lastNameNumber)
                 fs.writeFile("./views/"+Chart_Data.chartName+".json", JSON.stringify(_d), function(err) {
 
                     if(err) {
@@ -247,9 +254,10 @@ app.post('/submit-data', upload.any(), (req, res) => {
     console.log(chartData)
     
     //=========== Write Json File ==============
-    let stringData = JSON.stringify(data)
+    // let stringData = JSON.stringify(data)
     // sort before save @@@@
-    fs.writeFile("./views/"+req.body.data.chartName+".json", stringData, function(err) {
+    let _d = SortData(data, chartData.groupCount)
+    fs.writeFile("./views/"+req.body.data.chartName+".json", JSON.stringify(_d), function(err) {
 
         if(err) {
             return console.log(err);
@@ -271,7 +279,7 @@ app.post('/submit-data', upload.any(), (req, res) => {
     
 })
 
-function SortData(data, gNo) {
+function SortData(data, gNo, byLastNameGroupNumber) {
     let groupArray = new Array(gNo)
     let sizeArray = new Array(gNo)
     for(let i=0;i<gNo;i++) {
@@ -310,7 +318,30 @@ function SortData(data, gNo) {
         })
     }
 
-    console.log('data0 is ', groupArray[0])
+    console.log('garray is', groupArray)
+
+    console.log('$$$$$$$$$')
+    console.log('last name is', byLastNameGroupNumber)
+
+    //sort by lastname if groupname input like this => !groupname
+    // swap name and last name
+    // //Sort
+    for(let i=0;i<byLastNameGroupNumber.length;i++) {
+        for(let j=0;j<groupArray[byLastNameGroupNumber[i]].length;j++) {
+            groupArray[byLastNameGroupNumber[i]][j].lastName = (groupArray[byLastNameGroupNumber[i]][j].name.split(" "))[1]
+            console.log('sss', groupArray[byLastNameGroupNumber[i]][j].lastName)
+        }
+    }
+    for(let i=0;i<byLastNameGroupNumber.length;i++) {
+        groupArray[byLastNameGroupNumber[i]].sort(function(a, b) {
+            return (a.lastName > b.lastName) ? 1 : ((b.lastName > a.lastName) ? -1 : 0);
+        })
+    }
+   
+    console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+
+    console.log('group4 is ', groupArray[4])
+    // console.log('data is ', JSON.stringify(groupArray))
 
     let my_data = new Array(data.length)
     let count = 0
@@ -321,7 +352,11 @@ function SortData(data, gNo) {
         }
     }
     console.log('#########################')
-    console.log('my_data is', my_data)
+    // console.log('my_data is', my_data)
+
+    
+    
+
     return my_data
 
 }
