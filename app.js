@@ -365,13 +365,11 @@ function SortData(data, gNo, byLastNameGroupNumber) {
     console.log('#########################')
     // console.log('my_data is', my_data)
 
-    
-    
 
     return my_data
 
 }
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log('is running on port 3000')
 })
