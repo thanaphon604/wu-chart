@@ -203,7 +203,7 @@
             node = svg.append("g").selectAll(".node");
 
 
-        d3.json("http://localhost:3000/views/"+chartName+".json", function(error, classes) {
+        d3.json("https://wu-chart.herokuapp.com/views/"+chartName+".json", function(error, classes) {
             if (error) throw error;
 
             console.log('class:', classes)
