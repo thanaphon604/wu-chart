@@ -31,6 +31,20 @@ app.get('/getData', (req, res) => {
     })
 })
 
+app.get('/makefile', (req, res) => {
+    fs.writeFile('file.txt', 'Hello COntent', function(err) {
+        if(err) throw err
+        console.log('Saved!')
+        res.send('Saved')
+    })
+})
+
+app.get('/readfile', (req, res) => {
+    fs.read('file.txt', function(err, data) {
+        res.send(data)
+    })
+})
+
 app.get('/edit', (req, res) => {
     Data.find().then((data) => {
         let str = '<h1>Select your chart for edit.</h1><br />'
