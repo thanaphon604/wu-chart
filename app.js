@@ -35,7 +35,7 @@ app.get('/edit', (req, res) => {
     Data.find().then((data) => {
         let str = '<h1>Select your chart for edit.</h1><br />'
         for(let i=0;i<data.length;i++) {
-            str += '<a href="http://localhost:3000/edit/'+data[i].chartName+'"><h2>'+data[i].chartName+'</h2></a>'
+            str += '<a href="https://wu-chart.herokuapp.com/edit/'+data[i].chartName+'"><h2>'+data[i].chartName+'</h2></a>'
         }
         res.send(str)
     }, (e) => {
