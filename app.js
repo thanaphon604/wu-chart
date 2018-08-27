@@ -105,7 +105,7 @@ app.post('/edit-data', upload.any(), (req, res) => {
             }
             imgArray.push(oldPic) // old pic
         }
-        console.log('imgArray before', imgArray)
+        // console.log('imgArray before', imgArray)
         // got oldPic now get newPic and set to array
 
         for(let i=0;i<req.files.length;i++) {
@@ -125,7 +125,7 @@ app.post('/edit-data', upload.any(), (req, res) => {
             // console.log('d :', d)
         }
         console.log('=================================')
-        console.log('imgArray after', imgArray)
+        // console.log('imgArray after', imgArray)
 
         //Clear old data and save new data 
         
@@ -180,6 +180,7 @@ app.post('/edit-data', upload.any(), (req, res) => {
             newD.save().then((doc) => {
                 console.log('is saved', doc)
                 fs.unlinkSync('./views/'+Chart_Data.chartName+'.json')
+                SortData(Chart_Data.data, Chart_Data.groupCount)
                 fs.writeFile("./views/"+Chart_Data.chartName+".json", JSON.stringify(Chart_Data.data), function(err) {
 
                     if(err) {
@@ -269,6 +270,42 @@ app.post('/submit-data', upload.any(), (req, res) => {
 
     
 })
+
+function SortData(data, gNo) {
+    let groupArray = new Array(gNo)
+    let sizeArray = new Array(gNo)
+    for(let i=0;i<gNo;i++) {
+        sizeArray[i] = 0
+    }
+    for(let i=0;i<gNo;i++) {
+        for(let j=0;j<data.length;j++) {
+            if(data[j].groupNumber == i+1) {
+                sizeArray[i]++
+            }
+        }
+    }
+    for(let i=0;i<gNo;i++) {
+        groupArray[i] = new Array(sizeArray[i])
+        console.log('size of array '+i+' is', groupArray[i].length)
+        sizeArray[i] = 0
+    }
+
+    console.log('###########################')
+    console.log('sizeArray is', sizeArray)
+
+    // groupArray[0][0] = '1234'
+    for(let i=0;i<gNo;i++) {
+        for(let j=0;j<data.length;j++) {
+            if(data[j].groupNumber == i+1) {
+                groupArray[i][sizeArray[i]] = data[j]
+                sizeArray[i]++
+            }
+        }
+    }
+
+    console.log('data0 is ', groupArray[0])
+    
+}
 
 app.listen(3000, () => {
     console.log('is running on port 3000')
