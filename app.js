@@ -207,26 +207,31 @@ app.post('/edit-data', upload.any(), (req, res) => {
 })
 
 app.post('/submit-data', upload.any(), (req, res) => {
-    let len = req.files.length
-    let data = []
+    let count = 0
+    while(eval('req.body.data.node'+count)!=undefined) {
+        // console.log('data is ', eval('req.body.data.node'+count))
+        count++
+    }
+
     let groupLen = req.body.data.groupCount
-    let groupArray = []
-    let groupColorArray = []
+    let groupColorsArray = []
+    let groupNamesArray = []
+    let data_all = []
     for(let i=0;i<groupLen;i++) {
-        groupArray.push(eval('req.body.data.group'+i))
-        groupColorArray.push(eval('req.body.data.groupColor'+i))
+        groupColorsArray.push(eval('req.body.data.groupColor'+i))
+        groupNamesArray.push(eval('req.body.data.group'+i))
     }
-
-    let chartData = {
+    let Chart_Data = {
         chartName: req.body.data.chartName,
-        groupCount: req.body.data.groupCount,
-        groupNames: groupArray,
-        groupColors: groupColorArray,
+        fontSize: req.body.data.fontSize,
         circleSize: req.body.data.circleSize,
-        fontSize: req.body.data.fontSize
+        groupCount: req.body.data.groupCount,
+        groupNames: groupNamesArray,
+        groupColors: groupColorsArray
     }
 
-    for(let i=0;i<len;i++) {
+    //count is len all of new data
+    for(let i=0;i<count;i++) {
         let obj = {
             name: eval('req.body.data.node'+i),
             imports: eval("req.body.data.link"+i),
@@ -234,30 +239,36 @@ app.post('/submit-data', upload.any(), (req, res) => {
             imgName: req.files[i].filename,
             groupNumber: eval('req.body.data.groupNumberInput'+i)            
         }
-        data.push(obj)
+        data_all.push(obj)
     }
 
     //make links array from string
-    
-    for(let i=0;i<len;i++) {
+
+    for(let i=0;i<count;i++) {
         let link = []
-        let splitString = data[i].imports.split(',')    
+        let splitString = data_all[i].imports.split(',')
         // console.log(splitString)
         for(let j=0;j<splitString.length;j++) {
             if(splitString[j]!='') {
                 link.push(splitString[j])
             }
         }
-        data[i].imports = link        
+        data_all[i].imports = link        
     }
-    chartData.data = data
-    console.log(chartData)
+    Chart_Data.data = data_all
+    lastNameNumber = []
+    for(let i=0;i<Chart_Data.groupCount;i++) {
+        if(Chart_Data.groupNames[i].substr(0,1) == "!") {
+            lastNameNumber.push(i)
+        }
+    }
+
     
     //=========== Write Json File ==============
     // let stringData = JSON.stringify(data)
     // sort before save @@@@
-    let _d = SortData(data, chartData.groupCount)
-    fs.writeFile("./views/"+req.body.data.chartName+".json", JSON.stringify(_d), function(err) {
+    let _d = SortData(Chart_Data.data, Chart_Data.groupCount, lastNameNumber)
+    fs.writeFile("./views/"+Chart_Data.chartName+".json", JSON.stringify(_d), function(err) {
 
         if(err) {
             return console.log(err);
@@ -266,7 +277,7 @@ app.post('/submit-data', upload.any(), (req, res) => {
     }); 
 
     //Save model to DB
-    let newData = new Data(chartData)
+    let newData = new Data(Chart_Data)
     newData.save().then((doc) => {
         res.send(doc)
     }, (e) => {
