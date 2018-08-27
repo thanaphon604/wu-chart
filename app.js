@@ -180,8 +180,8 @@ app.post('/edit-data', upload.any(), (req, res) => {
             newD.save().then((doc) => {
                 console.log('is saved', doc)
                 fs.unlinkSync('./views/'+Chart_Data.chartName+'.json')
-                SortData(Chart_Data.data, Chart_Data.groupCount)
-                fs.writeFile("./views/"+Chart_Data.chartName+".json", JSON.stringify(Chart_Data.data), function(err) {
+                let _d = SortData(Chart_Data.data, Chart_Data.groupCount)
+                fs.writeFile("./views/"+Chart_Data.chartName+".json", JSON.stringify(_d), function(err) {
 
                     if(err) {
                         return console.log(err);
@@ -311,7 +311,18 @@ function SortData(data, gNo) {
     }
 
     console.log('data0 is ', groupArray[0])
-    
+
+    let my_data = new Array(data.length)
+    let count = 0
+    for(let i=0;i<gNo;i++) {
+        for(let j=0;j<sizeArray[i];j++) {
+            my_data[count] = groupArray[i][j]
+            count++ 
+        }
+    }
+    console.log('#########################')
+    console.log('my_data is', my_data)
+    return my_data
 
 }
 
