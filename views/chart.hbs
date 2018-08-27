@@ -271,7 +271,7 @@
                     $('#myPopup').css("display", "unset")
                     $('#myPopup').attr("data-url", url)
                     $('#myPopup').attr("data-img", imgName)
-                    let urlString = 'url("https://wu-chart.herokuapp.com/uploads/'+imgName+'")'
+                    let urlString = 'url("data:image/gif;base64,https://wu-chart.herokuapp.com/uploads/'+imgName+'")'
                     $('#myPopup').css("background-image", urlString)
                 })
 
