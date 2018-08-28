@@ -116,7 +116,12 @@
         }
 
     </style>
-
+    <script type="text/javascript">
+        if (screen.width <= 700) {
+            alert('1234test')
+            document.location = "https://wu-chart.herokuapp.com/edit";
+        }
+    </script>
 </head>
 <body>
     <div id="description">
@@ -146,10 +151,6 @@
     </div>
 
     <script>
-        if (screen.width <= 700) {
-            alert('1234test')
-            document.location = "https://wu-chart.herokuapp.com/edit";
-        }
         let chartName = "{{chartName}}";
         let groupCount = {{groupCount}};
         let groupColors = "{{groupColors}}";
