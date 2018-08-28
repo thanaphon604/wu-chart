@@ -146,11 +146,10 @@
     </div>
 
     <script>
-        var md = new MobileDetect(window.navigator.userAgent);
-        if (md.mobile()) {
-            document.location.href = 'https://www.google.co.th/';
+        if (screen.width <= 700) {
+            alert('1234test')
+            document.location = "https://wu-chart.herokuapp.com/edit";
         }
-
         let chartName = "{{chartName}}";
         let groupCount = {{groupCount}};
         let groupColors = "{{groupColors}}";
