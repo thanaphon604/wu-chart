@@ -220,6 +220,14 @@ app.post('/edit-data', upload.any(), (req, res) => {
     
 })
 
+app.get('/remove-chart', (req, res) => {
+    Data.remove().then((doc) => {
+        res.send(doc)
+    }, (e) => {
+        res.status(400).send(e)
+    })
+})
+
 app.post('/submit-data', upload.any(), (req, res) => {
     let count = 0
     while(eval('req.body.data.node'+count)!=undefined) {
