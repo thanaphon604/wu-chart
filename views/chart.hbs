@@ -64,10 +64,6 @@
             background-color: #673AB7;
         }
 
-        #description ul {
-            position: relative;
-        }
-
         #description ul li {
             font-size: 24px;
             line-height: 32px;
@@ -173,7 +169,7 @@
                 if(groupNames[i].charAt(0)=='!') {
                     groupNames[i] = groupNames[i].substr(1)
                 }
-                stringList += '<li style="margin-right: 25px ;color: '+groupColors[i]+';"><span style="color: '+groupColors[i]+';">■</span>'+groupNames[i]+'</li>'+br
+                stringList += '<li style="margin-right: 25px ;color: '+groupColors[i]+';"><span style="color: '+groupColors[i]+';">■</span>'+groupNames[i]+'</li>'
 
             }
             $('#group-list').html(stringList)
