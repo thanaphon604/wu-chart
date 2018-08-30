@@ -193,7 +193,14 @@ app.post('/edit-data', upload.any(), (req, res) => {
             let newD = new Data(Chart_Data)
             newD.save().then((doc) => {
                 console.log('is saved', doc)
-                fs.unlinkSync('./views/'+Chart_Data.chartName+'.json')
+                if (fs.existsSync('./views/'+Chart_Data.chartName+'.json')){
+                    fs.unlinkSync('./views/'+Chart_Data.chartName+'.json')
+                    console.log("have dir file for remove")
+                }else {
+                    console.log("no have dir file for remove so just save it!")
+                }
+                
+                
                 lastNameNumber = []
                 for(let i=0;i<Chart_Data.groupCount;i++) {
                     if(Chart_Data.groupNames[i].charAt(0) == '!') {
