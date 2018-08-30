@@ -129,7 +129,7 @@
 <body>
     <div id="description">
         <h3 id="main-title"></h3>
-        <ul id="group-list" style="margin-top: 15px;">
+        <ul id="group-list" style="margin-top: 15px; display: flex;">
         </ul>
     </div>
 
@@ -172,7 +172,7 @@
                 if(groupNames[i].charAt(0)=='!') {
                     groupNames[i] = groupNames[i].substr(1)
                 }
-                stringList += '<li style="color: '+groupColors[i]+';"><span style="color: '+groupColors[i]+';">■</span>'+groupNames[i]+'</li>'
+                stringList += '<li style="margin-right: 25px ;color: '+groupColors[i]+';"><span style="color: '+groupColors[i]+';">■</span>'+groupNames[i]+'</li>'
             }
             $('#group-list').html(stringList)
         })
