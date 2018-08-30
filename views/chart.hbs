@@ -158,19 +158,11 @@
         $(document).ready(function() {
             $('#main-title').html(chartName)
             let stringList = ''
-            let br = ''
             for(let i=0;i<groupCount;i++) {
-                if(i%4==0) {
-                    br == '<br />'
-                    console.log('break')
-                }else {
-                    br == ''
-                }
                 if(groupNames[i].charAt(0)=='!') {
                     groupNames[i] = groupNames[i].substr(1)
                 }
-                stringList += '<li style="float: left; margin-right: 25px ;color: '+groupColors[i]+';"><span style="color: '+groupColors[i]+';">■</span>'+groupNames[i]+'</li>'+br
-
+                stringList += '<li style="float: left; margin-right: 25px ;color: '+groupColors[i]+';"><span style="color: '+groupColors[i]+';">■</span>'+groupNames[i]+'</li>'
             }
             $('#group-list').html(stringList)
         })
