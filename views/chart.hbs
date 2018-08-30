@@ -136,8 +136,7 @@
     <div id="myPopup">
         <div style="display: flex; flex-direction: column; align-items: flex-end;">
             <div style="display: flex">
-                <i id="openDocBtn" onclick="openDoc()" style="font-size: 25px; padding: 6px; color: #43A047;" class="fas fa-file-alt"></i>
-                <i id="exitBtn" onclick="closePopup()" style="font-size: 25px; padding: 6px; color: red;" class="far fa-times-circle"></i>
+                <i id="openDocBtn" onclick="openDoc()" style="font-size: 25px; padding: 6px; color: #43A047; background-color: #fff;" class="fas fa-file-alt"></i>
             </div>
         </div>
     </div>
@@ -356,11 +355,7 @@
             return imports;
         }
 
-        $("#exitBtn").css("cursor", "pointer");
         $("#openDocBtn").css("cursor", "pointer");
-        function closePopup() {
-            $('#myPopup').css("display", "none")
-        }
         function openDoc() {
             let url = $('#myPopup').attr("data-url")
             console.log('url is', url)
