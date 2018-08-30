@@ -166,7 +166,11 @@
             }
             let myName = chartName
             myName = chartName.split('')
-            myName[0] = 'Z'
+            for(let i=0;i<myName.length;i++) {
+                if(myName[i] == '_') {
+                    myName[I] = ' '
+                }
+            }
             let ss = ''
             for(let i=0;i<myName.length;i++) {
                 ss+=myName[i]
