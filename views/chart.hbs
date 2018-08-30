@@ -94,14 +94,11 @@
             background-color: #fff;
             border: 3px solid #000;
             border-radius: 8px;
-            overflow: hidden;
             background-size: 100% 360px;
             background-position: center;
         }
         #main-show {
-            position:absolute;
-            left:0px;
-            top:0px;
+          
         }
 
         .clearfix::after {
@@ -129,9 +126,9 @@
 
     
     
-    <div>
+    <div style="display: flex;">
         <div style="width: 700; height: 700; background-color: red;" id="main-show"></div>
-        <div style="float: left;" id="myPopup">
+        <div id="myPopup">
             <div style="display: flex; flex-direction: column; align-items: flex-end;">
                 <div style="display: flex">
                     <i id="openDocBtn" onclick="openDoc()" style="font-size: 25px; padding: 6px; color: #43A047; background-color: #fff;" class="fas fa-file-alt"></i>
