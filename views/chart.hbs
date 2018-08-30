@@ -158,7 +158,19 @@
         console.log('data:', data)
 
         $(document).ready(function() {
-            $('#main-title').html(chartName)
+            let _Array = []
+            for(let i=0;i<chartName.length;i++) {
+                if(chartName.charAt(i)=='_') {
+                    _Array.push(i)
+                }
+            }
+            let myName = chartName
+            var regex = /_/gi;
+            for(let i=0;i<_Array;I++) {
+                myName.replace(regex, ' ')
+            }
+            console.log('chart name is ', myName)
+            $('#main-title').html(myName)
             let stringList = ''
             for(let i=0;i<groupCount;i++) {
                 if(groupNames[i].charAt(0)=='!') {
