@@ -165,11 +165,13 @@
                 }
             }
             let myName = chartName
-            var regex = /_/gi;
-            for(let i=0;i<_Array;i++) {
-                myName.replace(regex, ' ')
+            myName = chartName.split('')
+            myName[0] = 'Z'
+            let ss = ''
+            for(let i=0;i<myName.length;i++) {
+                ss+=myName[i]
             }
-            console.log('chart name is ', myName)
+            console.log('chart name is ', ss)
             $('#main-title').html(myName)
             let stringList = ''
             for(let i=0;i<groupCount;i++) {
