@@ -111,13 +111,6 @@
             left:0px;
             top:0px;
         }
-        break {
-            display: inline-block; 
-            flex-basis: 100%;
-            width: 0px; 
-            height: 0px; 
-            overflow: hidden;
-        }
 
     </style>
     <script type="text/javascript">
@@ -172,7 +165,7 @@
             let br = ''
             for(let i=0;i<groupCount;i++) {
                 if(i%4==0) {
-                    br == '<break></break>'
+                    br == '<br /><p></p>'
                     console.log('break')
                 }else {
                     br == ''
