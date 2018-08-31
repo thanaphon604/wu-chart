@@ -272,8 +272,10 @@
                 {{!-- $('svg').center() --}}
 
                 $("#description").on('click', function() {
-                    alert('test')
-                }
+                    let picPath = $('#myPopup').css('background-image')
+                    console.log('picPath:', picPath)
+                    window.open(picPath)               
+                })
                 
             })
 
