@@ -270,7 +270,12 @@
                 })
 
                 {{!-- $('svg').center() --}}
-                //test
+
+                $("#description").on('click', function() {
+                    let picPath = $('#myPopup').css('background-image')
+                    window.open(picPath, 'Pic Project', 'window settings');
+                    return false                    
+                }
                 
             })
 
