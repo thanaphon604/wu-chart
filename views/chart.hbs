@@ -273,8 +273,8 @@
 
                 $("#description").on('click', function() {
                     let picPath = $('#myPopup').css('background-image')
-                    window.open(picPath, 'Pic Project', 'window settings');
-                    return false                    
+                    console.log('picPath:', picPath)
+                    window.open(picPath)               
                 }
                 
             })
