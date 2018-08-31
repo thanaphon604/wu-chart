@@ -274,7 +274,8 @@
                 $("#myPopup").on('click', function() {
                     let picPath = $('#myPopup').css('background-image')
                     picPath = picPath.split('/uploads/')
-                    console.log('picPath:', picPath[1])
+                    picPath = picPath[1].split('")')
+                    console.log('picPath:', picPath[0])
                     {{!-- window.open(picPath)                --}}
                 })
                 
