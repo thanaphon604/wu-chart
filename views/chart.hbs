@@ -314,8 +314,9 @@
                 stringList += '<a href="'+url+'" target="_blank"><li class="ll" style="float: left; margin-right: 25px ;color: '+groupColors[i]+';"><span style="color: '+groupColors[i]+';">■</span>'+groupNames[i]+'</li></a>'
             }
             $('#group-list').html(stringList)
+            let oldColor
             $('.ll').hover(function() {
-                let oldColor = $(this).css('color')
+                oldColor = $(this).css('color')
                 $(this).css('color', '#fff')
             }, function() {
                 $(this).css('color', oldColor)
