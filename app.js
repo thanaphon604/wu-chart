@@ -75,20 +75,14 @@ app.get('/edit/:name', (req, res) => {
 })
 
 app.get('/chart/:name/:groupNumber', (req, res) => {
-    Data.find({
-        chartName: req.params.name
-    }).then((d) => {
-        let hardData = []
-        for(let i=0;i<d[0].data.length;i++) {
-            if(''+d[0].data[i].groupNumber == req.params.groupNumber) {
-                hardData.push(d[0].data[i])
-            }
-        }
-        console.log('data is ', hardData)
-        res.send(hardData)
-    }, (e) => {
-        res.status(400).send(e)
-    })
+    // read file because file .json is already sort
+    if (fs.existsSync('./views/'+req.params.name+'.json')){
+        let data = fs.readFileSync('./views/'+req.params.name+'.json')
+        res.send(data)
+    }else {
+        res.status(404).send('not found this file')
+    }
+    
 })
 
 // render chart by name 
