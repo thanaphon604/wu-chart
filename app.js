@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const fs = require('fs')
 const hbs = require('hbs')
 const {Data} = require('./dataModel')
+var zip = new require('node-zip')();
 
 
 var multer  = require('multer')
@@ -29,6 +30,13 @@ app.get('/getData', (req, res) => {
     }, (e) => {
         res.status(400).send(e)
     })
+})
+
+app.get('/download-pic', (req, res) => {
+    zip.file('test.txt', 'hello there');
+    var data = zip.generate({base64:false,compression:'DEFLATE'});
+    fs.writeFileSync('./public/test.zip', data, 'binary');
+    res.send('done')
 })
 
 app.get('/makefile', (req, res) => {
