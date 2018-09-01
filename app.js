@@ -77,8 +77,15 @@ app.get('/edit/:name', (req, res) => {
 app.get('/chart/:name/:groupNumber', (req, res) => {
     // read file because file .json is already sort
     if (fs.existsSync('./views/'+req.params.name+'.json')){
-        var obj = JSON.parse(fs.readFileSync('./views/'+req.params.name+'.json', 'utf8'));
-        res.send(obj)
+        let obj = JSON.parse(fs.readFileSync('./views/'+req.params.name+'.json', 'utf8'));
+        let data = []
+        for(let i=0;i<obj.length;i++) {
+            if(''+obj[i].groupNumber == req.params.groupNumber) {
+                data.push(obj[i])
+            }
+        }
+        
+        res.send(data)
     }else {
         res.status(404).send('not found this file')
     }
