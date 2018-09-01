@@ -54,7 +54,7 @@
                 }
                 let urlImage = 'https://wu-chart.herokuapp.com/uploads/'+data[_1].imgName
                 let show_link = ''
-                if(data[_1].url == '') {
+                if(data[_1].url != 'http://google.co.th') {
                     show_link = '<a href="'+data[_1].url+'" class="btn btn-primary">Info</a>'
                 }
                 _1colString += 
@@ -83,7 +83,7 @@
                 }
                 let urlImage = 'https://wu-chart.herokuapp.com/uploads/'+data[_2].imgName
                 let show_link = ''
-                if(data[_2].url == '') {
+                if(data[_2].url != 'http://google.co.th') {
                     show_link = '<a href="'+data[_2].url+'" class="btn btn-primary">Info</a>'
                 }
                 _2colString += 
