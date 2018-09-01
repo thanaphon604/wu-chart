@@ -231,6 +231,7 @@
 
 
     <script>
+        var isCanClickModal = false
         // Get the modal
         var modal = document.getElementById('myModal');
 
@@ -239,16 +240,17 @@
         var modalImg = document.getElementById("img01");
         var captionText = document.getElementById("caption");
         img.onclick = function(){
-            modal.style.display = "block";
-            {{!-- modalImg.src = this.src; --}}
-            let picPath = $('#myPopup').css('background-image')
-            picPath = picPath.split('/uploads/')
-            picPath = picPath[1].split('")')
-            let url = "https://wu-chart.herokuapp.com/uploads/"+picPath[0]
-            console.log('picPath:', url)
-            {{!-- 123 --}}
-            modalImg.src = url
-            captionText.innerHTML = this.alt;
+            if(isCanClickModal) {
+                 modal.style.display = "block";
+                let picPath = $('#myPopup').css('background-image')
+                picPath = picPath.split('/uploads/')
+                picPath = picPath[1].split('")')
+                let url = "https://wu-chart.herokuapp.com/uploads/"+picPath[0]
+                console.log('picPath:', url)
+                {{!-- 123 --}}
+                modalImg.src = url
+                captionText.innerHTML = this.alt;
+            }
         }
 
         // Get the <span> element that closes the modal
@@ -385,6 +387,7 @@
                 }
 
                 $(".node").on('click', function() {
+                    isCanClickModal = true
                     let url = $(this).attr("data-url")
                     let imgName = $(this).attr("data-img")
                     $('#myPopup').css("display", "unset")
