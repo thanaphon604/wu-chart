@@ -78,7 +78,7 @@ app.get('/chart/:name/:groupNumber', (req, res) => {
     // read file because file .json is already sort
     if (fs.existsSync('./views/'+req.params.name+'.json')){
         let data = fs.readFileSync('./views/'+req.params.name+'.json')
-        res.send(data)
+        res.send(data.length)
     }else {
         res.status(404).send('not found this file')
     }
