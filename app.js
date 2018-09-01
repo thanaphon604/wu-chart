@@ -79,13 +79,22 @@ app.get('/chart/:name/:groupNumber', (req, res) => {
     if (fs.existsSync('./views/'+req.params.name+'.json')){
         let obj = JSON.parse(fs.readFileSync('./views/'+req.params.name+'.json', 'utf8'));
         let data = []
+        let groupName = ''
         for(let i=0;i<obj.length;i++) {
             if(''+obj[i].groupNumber == req.params.groupNumber) {
                 data.push(obj[i])
             }
         }
+
+        Data.find({chartName: req.params.name}).then((doc) => {
+            groupName = doc[0].groupNames[groupNumber-1]
+            res.render('group.hbs', {
+                chartName: req.params.name,
+                groupName,
+                data: encodeURI(JSON.stringify(data))
+            })
+        })
         
-        res.send(data)
     }else {
         res.status(404).send('not found this file')
     }
