@@ -311,11 +311,11 @@
                 if(groupNames[i].charAt(0)=='!') {
                     groupNames[i] = groupNames[i].substr(1)
                 }
-                stringList += '<a class="ll" href="'+url+'" target="_blank"><li style="float: left; margin-right: 25px ;color: '+groupColors[i]+';"><span style="color: '+groupColors[i]+';">■</span>'+groupNames[i]+'</li></a>'
+                stringList += '<a href="'+url+'" target="_blank"><li class="ll" style="float: left; margin-right: 25px ;color: '+groupColors[i]+';"><span style="color: '+groupColors[i]+';">■</span>'+groupNames[i]+'</li></a>'
             }
             $('#group-list').html(stringList)
             $('.ll').hover(function() {
-                $(this).toggleClass('li_hover')
+                $(this).css('color', '#fff')
             })
 
         })
