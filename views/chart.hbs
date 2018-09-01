@@ -72,25 +72,6 @@
             margin-top: 6px;
         }
 
-        #description ul a :hover {
-            transition-duration: 0.35s;
-            color: #fff;
-        }
-
-        #description ul a:hover {
-            transition-duration: 0.35s;
-            color: #fff;
-        }
-
-        #description ul a:active {
-            color: #000;
-        }
-
-        #description ul a:active {
-            color: #000;
-        }
-
-
         #description ul span {
             font-size: 60px;
             line-height: 32px;
@@ -209,6 +190,10 @@
                 width: 100%;
             }
         }
+
+        .li_hover { 
+            color: #fff; 
+        }
         
 
     </style>
@@ -326,9 +311,12 @@
                 if(groupNames[i].charAt(0)=='!') {
                     groupNames[i] = groupNames[i].substr(1)
                 }
-                stringList += '<a href="'+url+'" target="_blank"><li style="float: left; margin-right: 25px ;color: '+groupColors[i]+';"><span style="color: '+groupColors[i]+';">■</span>'+groupNames[i]+'</li></a>'
+                stringList += '<a class="ll" href="'+url+'" target="_blank"><li style="float: left; margin-right: 25px ;color: '+groupColors[i]+';"><span style="color: '+groupColors[i]+';">■</span>'+groupNames[i]+'</li></a>'
             }
             $('#group-list').html(stringList)
+            $('.ll').hover(function() {
+                $(this).toggleClass('li_hover')
+            })
 
         })
 
