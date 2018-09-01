@@ -374,6 +374,7 @@
 
                 $(".node").css("font-size", fSize+"px");
                 $(".node").css("cursor", "pointer");
+                $("#myPopup").css("cursor", "pointer");
 
                 let allNode = document.getElementsByClassName('node')
                 for(let i=0;i<allNode.length;i++) {
@@ -395,14 +396,6 @@
 
                 {{!-- $('svg').center() --}}
 
-                {{!-- $("#myPopup").on('click', function() {
-                    let picPath = $('#myPopup').css('background-image')
-                    picPath = picPath.split('/uploads/')
-                    picPath = picPath[1].split('")')
-                    let url = "https://wu-chart.herokuapp.com/uploads/"+picPath[0]
-                    console.log('picPath:', url)
-                    window.open(url)               
-                }) --}}
                 
             })
 
