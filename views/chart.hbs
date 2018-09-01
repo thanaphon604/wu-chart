@@ -315,7 +315,10 @@
             }
             $('#group-list').html(stringList)
             $('.ll').hover(function() {
+                let oldColor = $(this).css('color')
                 $(this).css('color', '#fff')
+            }, function() {
+                $(this).css('color', oldColor)
             })
 
         })
