@@ -10,7 +10,12 @@
     <title>{{chartName}} : {{groupName}}</title>
 
     <style>
-
+        #main-title {
+            padding: 25px 0;
+        }
+        .card-line {
+            padding: 15px 0;
+        }
     </style>
 </head>
 <body>
@@ -19,7 +24,7 @@
 
     <div id="main-show" class="container">
         <div id="main-title" class="display-4">{{chartName}} : {{groupName}}</div>
-        hello test
+        <hr id="after-main-title">
     </div>
     
 
@@ -35,7 +40,7 @@
         let _2 = 1
         let htmlCardString = ''
         while(true) {
-            let rowString = '<div class="row">'
+            let rowString = '<div class="row card-line">'
             let _1colString = ''
             let _2colString = ''
             htmlCardString += rowString
@@ -79,7 +84,7 @@
         }
         
         console.log('html String is ', htmlCardString)
-        $("#main-title").after(htmlCardString)
+        $("#after-main-title").after(htmlCardString)
 
     </script>
 </body>
