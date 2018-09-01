@@ -210,8 +210,6 @@
         </ul>
         <div class="clearfix"></div>
     </div>
-    
-    
 
     <!-- The Modal -->
     <div id="myModal" class="modal">
@@ -225,7 +223,17 @@
         let htmlString = ''
         
         if(isMobile) {
-
+            htmlString = '<div style="margin-top: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center;">'+
+                            '<div style="margin-right: 35px;" id="main-show">'+
+                            '</div>'+
+                            '<div id="myPopup">'+
+                                '<div style="display: flex; flex-direction: column; align-items: flex-end;">'+
+                                    '<div style="display: flex">'+
+                                        '<i id="openDocBtn" onclick="openDoc()" style="font-size: 25px; padding: 6px; color: #43A047; background-color: #fff; border-radius: 8px;" class="fas fa-file-alt"></i>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'
         }else {
             htmlString = '<div style="margin-top: 30px; display: flex; justify-content: center; align-items: center;">'+
                             '<div style="margin-right: 35px;" id="main-show">'+
