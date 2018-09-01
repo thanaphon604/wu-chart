@@ -33,7 +33,7 @@ app.get('/getData', (req, res) => {
 })
 
 app.get('/download-pic', (req, res) => {
-    zipFolder('./ss', './public/test.zip', function(err) {
+    zipFolder('./uploads', './public/pic.zip', function(err) {
         if(err) {
             res.send('oh no!');
         } else {
