@@ -77,8 +77,8 @@ app.get('/edit/:name', (req, res) => {
 app.get('/chart/:name/:groupNumber', (req, res) => {
     // read file because file .json is already sort
     if (fs.existsSync('./views/'+req.params.name+'.json')){
-        let data = fs.readFileSync('./views/'+req.params.name+'.json')
-        res.send(data.length)
+        var obj = JSON.parse(fs.readFileSync('./views/'+req.params.name+'.json', 'utf8'));
+        res.send(obj)
     }else {
         res.status(404).send('not found this file')
     }
