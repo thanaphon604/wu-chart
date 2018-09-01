@@ -53,14 +53,17 @@
                     }
                 }
                 let urlImage = 'https://wu-chart.herokuapp.com/uploads/'+data[_1].imgName
+                let show_link = ''
+                if(data[_1].url == '') {
+                    show_link = '<a href="'+data[_1].url+'" class="btn btn-primary">Info</a>'
+                }
                 _1colString += 
                 '<div class="col-sm-6">'+
                     '<div class="card">'+
                         '<div class="card-body">'+
                             '<h5 class="card-title">'+data[_1].name+'</h5>'+
                             '<img src="'+urlImage+'" class="img-thumbnail rounded" >'+
-                            '<p class="card-text">'+importString+'</p>'+
-                            '<a display="none" href="'+data[_1].url+'" class="btn btn-primary">Info</a>'+
+                            '<p class="card-text">'+importString+'</p>'+ show_link +
                         '</div>'+
                     '</div>'+
                 '</div>'
@@ -79,14 +82,17 @@
                     }
                 }
                 let urlImage = 'https://wu-chart.herokuapp.com/uploads/'+data[_2].imgName
+                let show_link = ''
+                if(data[_2].url == '') {
+                    show_link = '<a href="'+data[_2].url+'" class="btn btn-primary">Info</a>'
+                }
                 _2colString += 
                 '<div class="col-sm-6">'+
                     '<div class="card">'+
                         '<div class="card-body">'+
                             '<h5 class="card-title">'+data[_2].name+'</h5>'+
                             '<img src="'+urlImage+'" class="img-thumbnail rounded" >'+
-                            '<p class="card-text">'+importString+'</p>'+
-                            '<a target+"_blank" href="'+data[_2].url+'" class="btn btn-primary">Info</a>'+
+                            '<p class="card-text">'+importString+'</p>'+ show_link +
                         '</div>'+
                     '</div>'+
                 '</div>'
