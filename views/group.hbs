@@ -122,9 +122,9 @@
 
         // Get the image and insert it inside the modal - use its "alt" text as a caption
         var modalImg = document.getElementById("img01");
-        function isImgClick(nodeName){
+        function isImgClick(nodeName, url){
             modal.style.display = "block";
-            modalImg.src = this.src;
+            modalImg.src = url;
             captionText.innerHTML = nodeName;
         }
 
@@ -171,7 +171,7 @@
                     '<div class="card">'+
                         '<div class="card-body">'+
                             '<h5 class="card-title">'+data[_1].name+'</h5>'+
-                            '<img onclick="isImgClick(data[_1].name)" src="'+urlImage+'" class="img-thumbnail rounded" >'+
+                            '<img onclick="isImgClick(data[_1].name, urlImage)" src="'+urlImage+'" class="img-thumbnail rounded" >'+
                             '<p class="card-text">'+importString+'</p>'+ show_link +
                         '</div>'+
                     '</div>'+
@@ -200,7 +200,7 @@
                     '<div class="card">'+
                         '<div class="card-body">'+
                             '<h5 class="card-title">'+data[_2].name+'</h5>'+
-                            '<img onclick="isImgClick(data[_2].name)" src="'+urlImage+'" class="img-thumbnail rounded" >'+
+                            '<img onclick="isImgClick(data[_2].name, urlImage)" src="'+urlImage+'" class="img-thumbnail rounded" >'+
                             '<p class="card-text">'+importString+'</p>'+ show_link +
                         '</div>'+
                     '</div>'+
