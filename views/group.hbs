@@ -15,9 +15,10 @@
 </head>
 <body>
 
-    <div class="display-4">{{chartName}} : {{groupName}}</div>
+    
 
     <div id="main-show" class="container">
+        <div class="display-4">{{chartName}} : {{groupName}}</div>
         <div class="row">
             <div class="col-sm-6">
                 <div class="card">
@@ -46,6 +47,69 @@
         data = JSON.parse(decodeURI(data))
         console.log('data:', data)
         
+        let cardString = ''
+        let len = Math.floor(data.length)
+        for(let i=0;i<data.length;i*=2) {
+            if(i+1>=data.length) {
+                let importString1 = ''
+                for(let i=0;i<data[i].imports.length;i++) {
+                    importString1 += data[i].imports[i] 
+                    if(i<data[i].imports.length-1) {
+                        importString1 += ', '
+                    }
+                }
+                cardString += 
+                '<div class="row">'+
+                    '<div class="col-sm-6">'+
+                        '<div class="card">'+
+                            '<div class="card-body">'+
+                                '<h5 class="card-title">'+data[i].name+'</h5>'+
+                                '<p class="card-text">'+importString1+'</p>'+
+                                '<a href="'+data[i].url+'" class="btn btn-primary"></a>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'
+            }else {
+                let importString1 = ''
+                let importString2 = ''
+                for(let i=0;i<data[i].imports.length;i++) {
+                    importString1 += data[i].imports[i] 
+                    if(i<data[i].imports.length-1) {
+                        importString1 += ', '
+                    }
+                }
+                for(let i=0;i<data[i+1].imports.length;i++) {
+                    importString2 += data[i+1].imports[i] 
+                    if(i<data[i+1].imports.length-1) {
+                        importString2 += ', '
+                    }
+                }
+                cardString += 
+                '<div class="row">'+
+                    '<div class="col-sm-6">'+
+                        '<div class="card">'+
+                            '<div class="card-body">'+
+                                '<h5 class="card-title">'+data[i].name+'</h5>'+
+                                '<p class="card-text">'+importString1+'</p>'+
+                                '<a href="'+data[i].url+'" class="btn btn-primary"></a>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="col-sm-6">'+
+                        '<div class="card">'+
+                            '<div class="card-body">'+
+                                '<h5 class="card-title">'+data[i+1].name+'</h5>'+
+                                '<p class="card-text">'+importString2+'</p>'+
+                                '<a href="'+data[i+1].url+'" class="btn btn-primary"></a>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'
+            }
+            
+        }
+
     </script>
 </body>
 </html>
