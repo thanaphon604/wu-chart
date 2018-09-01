@@ -122,10 +122,9 @@
 
         // Get the image and insert it inside the modal - use its "alt" text as a caption
         var modalImg = document.getElementById("img01");
-        function isImgClick(nodeName, name){
+        function isImgClick(id){
             modal.style.display = "block";
-            modalImg.src = 'https://wu-chart.herokuapp.com/uploads/'+name
-            captionText.innerHTML = nodeName;
+            modalImg.src = $('#'+id).attr('src');
         }
 
         // Get the <span> element that closes the modal
@@ -171,7 +170,7 @@
                     '<div class="card">'+
                         '<div class="card-body">'+
                             '<h5 class="card-title">'+data[_1].name+'</h5>'+
-                            '<img onclick="isImgClick(data[_1].name, data[_1].imgName)" src="'+urlImage+'" class="img-thumbnail rounded" >'+
+                            '<img id="im'+_1+'" onclick="isImgClick(this.id)" src="'+urlImage+'" class="img-thumbnail rounded" >'+
                             '<p class="card-text">'+importString+'</p>'+ show_link +
                         '</div>'+
                     '</div>'+
@@ -200,7 +199,7 @@
                     '<div class="card">'+
                         '<div class="card-body">'+
                             '<h5 class="card-title">'+data[_2].name+'</h5>'+
-                            '<img onclick="isImgClick(data[_2].name, data[_2].imgName)" src="'+urlImage+'" class="img-thumbnail rounded" >'+
+                            '<img id="im'+_2+'" onclick="isImgClick(this.id)" src="'+urlImage+'" class="img-thumbnail rounded" >'+
                             '<p class="card-text">'+importString+'</p>'+ show_link +
                         '</div>'+
                     '</div>'+
