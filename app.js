@@ -68,6 +68,18 @@ app.get('/edit', (req, res) => {
     })
 })
 
+app.get('/chart', (req, res) => {
+    Data.find().then((data) => {
+        let str = '<h1>Select your chart for open.</h1><br />'
+        for(let i=0;i<data.length;i++) {
+            str += '<a href="https://wu-chart.herokuapp.com/chart/'+data[i].chartName+'"><h2>'+data[i].chartName+'</h2></a>'
+        }
+        res.send(str)
+    }, (e) => {
+        res.status(400).send(e)
+    })
+})
+
 app.get('/edit/:name', (req, res) => {
     Data.find({chartName: req.params.name}).then((d) => {
         console.log(d[0])
