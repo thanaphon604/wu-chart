@@ -7,6 +7,10 @@
     <title>{{chartName}} : {{groupName}}</title>
 </head>
 <body>
-    
+    <script>
+        let data = "{{data}}"
+        data = JSON.parse(decodeURI(data))
+        console.log('data:', data)
+    </script>
 </body>
 </html>
