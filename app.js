@@ -37,6 +37,7 @@ app.get('/download-pic', (req, res) => {
    zip.addLocalFile("/text.txt")
    var willSendthis = zip.toBuffer()
    zip.writeZip('/public/test2.zip')
+   res.send('done')
 })
 
 app.get('/makefile', (req, res) => {
