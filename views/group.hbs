@@ -45,12 +45,19 @@
             let _2colString = ''
             htmlCardString += rowString
             if(_1<data.length) { // have data in index _1
+                let importString = ''
+                for(let i=0;i<data[_1].imports.length;i++) {
+                    importString += data[_1].imports[i]
+                    if(i<data[_1].imports.length-1) {
+                        importString += ', '
+                    }
+                }
                 _1colString += 
                 '<div class="col-sm-6">'+
                     '<div class="card">'+
                         '<div class="card-body">'+
                             '<h5 class="card-title">'+data[_1].name+'</h5>'+
-                            '<p class="card-text">'+'imports'+'</p>'+
+                            '<p class="card-text">'+importString+'</p>'+
                             '<a href="'+data[_1].url+'" class="btn btn-primary"></a>'+
                         '</div>'+
                     '</div>'+
@@ -62,13 +69,20 @@
                 break;
             }
             if(_2<data.length) { // have data in index _2
+                let importString = ''
+                for(let i=0;i<data[_2].imports.length;i++) {
+                    importString += data[_2].imports[i]
+                    if(i<data[_2].imports.length-1) {
+                        importString += ', '
+                    }
+                }
                 _2colString += 
                 '<div class="col-sm-6">'+
                     '<div class="card">'+
                         '<div class="card-body">'+
                             '<h5 class="card-title">'+data[_2].name+'</h5>'+
-                            '<p class="card-text">'+'imports'+'</p>'+
-                            '<a href="'+data[_2].url+'" class="btn btn-primary"></a>'+
+                            '<p class="card-text">'+importString+'</p>'+
+                            '<a target+"_blank" href="'+data[_2].url+'" class="btn btn-primary"></a>'+
                         '</div>'+
                     '</div>'+
                 '</div>'
