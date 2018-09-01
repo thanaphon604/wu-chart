@@ -87,7 +87,7 @@ app.get('/chart/:name/:groupNumber', (req, res) => {
         }
 
         Data.find({chartName: req.params.name}).then((doc) => {
-            groupName = doc[0].groupNames[groupNumber-1]
+            groupName = doc[0].groupNames[req.params.groupNumber-1]
             res.render('group.hbs', {
                 chartName: req.params.name,
                 groupName,
