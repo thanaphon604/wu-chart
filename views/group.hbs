@@ -170,7 +170,7 @@
                     '<div class="card">'+
                         '<div class="card-body">'+
                             '<h5 class="card-title">'+data[_1].name+'</h5>'+
-                            '<img id="im'+_1+'" onclick="isImgClick(this.id)" src="'+urlImage+'" class="img-thumbnail rounded" >'+
+                            '<img class="myImg" id="im'+_1+'" onclick="isImgClick(this.id)" src="'+urlImage+'" class="img-thumbnail rounded" >'+
                             '<p class="card-text">'+importString+'</p>'+ show_link +
                         '</div>'+
                     '</div>'+
@@ -199,7 +199,7 @@
                     '<div class="card">'+
                         '<div class="card-body">'+
                             '<h5 class="card-title">'+data[_2].name+'</h5>'+
-                            '<img id="im'+_2+'" onclick="isImgClick(this.id)" src="'+urlImage+'" class="img-thumbnail rounded" >'+
+                            '<img class="myImg" id="im'+_2+'" onclick="isImgClick(this.id)" src="'+urlImage+'" class="img-thumbnail rounded" >'+
                             '<p class="card-text">'+importString+'</p>'+ show_link +
                         '</div>'+
                     '</div>'+
@@ -217,6 +217,7 @@
         
         console.log('html String is ', htmlCardString)
         $("#after-main-title").after(htmlCardString)
+        $(".myImg").css("cursor", "pointer");
 
     </script>
 </body>
