@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const fs = require('fs')
 const hbs = require('hbs')
 const {Data} = require('./dataModel')
-var AdmZip = require('adm-zip');
+const zipFolder = require('zip-folder');
 
 
 var multer  = require('multer')
@@ -33,11 +33,13 @@ app.get('/getData', (req, res) => {
 })
 
 app.get('/download-pic', (req, res) => {
-   var zip = new AdmZip()
-   zip.addLocalFile("/text.txt")
-   var willSendthis = zip.toBuffer()
-   zip.writeZip('/public/test2.zip')
-   res.send('done')
+    zipFolder('/test.txt', '/public/test.zip', function(err) {
+        if(err) {
+            res.send('oh no!');
+        } else {
+            res.send('EXCELLENT');
+        }
+    });
 })
 
 app.get('/makefile', (req, res) => {
