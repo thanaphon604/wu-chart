@@ -221,8 +221,6 @@
         </div>
     </div>
 
-    <img id="myImg" src="../uploads/main-logo.png" alt="Snow" style="width:100%;max-width:300px">
-
     <!-- The Modal -->
     <div id="myModal" class="modal">
         <span class="close">&times;</span>
@@ -237,12 +235,19 @@
         var modal = document.getElementById('myModal');
 
         // Get the image and insert it inside the modal - use its "alt" text as a caption
-        var img = document.getElementById('myImg');
+        var img = document.getElementById('myPopup');
         var modalImg = document.getElementById("img01");
         var captionText = document.getElementById("caption");
         img.onclick = function(){
             modal.style.display = "block";
-            modalImg.src = this.src;
+            {{!-- modalImg.src = this.src; --}}
+            let picPath = $('#myPopup').css('background-image')
+            picPath = picPath.split('/uploads/')
+            picPath = picPath[1].split('")')
+            let url = "https://wu-chart.herokuapp.com/uploads/"+picPath[0]
+            console.log('picPath:', url)
+            {{!-- 123 --}}
+            modalImg.src = url
             captionText.innerHTML = this.alt;
         }
 
@@ -390,14 +395,14 @@
 
                 {{!-- $('svg').center() --}}
 
-                $("#myPopup").on('click', function() {
+                {{!-- $("#myPopup").on('click', function() {
                     let picPath = $('#myPopup').css('background-image')
                     picPath = picPath.split('/uploads/')
                     picPath = picPath[1].split('")')
                     let url = "https://wu-chart.herokuapp.com/uploads/"+picPath[0]
                     console.log('picPath:', url)
                     window.open(url)               
-                })
+                }) --}}
                 
             })
 
