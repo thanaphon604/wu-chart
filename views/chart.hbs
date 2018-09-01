@@ -217,8 +217,6 @@
         <img class="modal-content" id="img01">
     </div>
 
-
-
     <script>
         let htmlString = ''
         
@@ -305,10 +303,11 @@
             $('#main-title').html(chartName)
             let stringList = ''
             for(let i=0;i<groupCount;i++) {
+                let url = 'https://wu-chart.herokuapp.com/chart/'+chartName+'/'+(i+1)
                 if(groupNames[i].charAt(0)=='!') {
                     groupNames[i] = groupNames[i].substr(1)
                 }
-                stringList += '<li style="float: left; margin-right: 25px ;color: '+groupColors[i]+';"><span style="color: '+groupColors[i]+';">■</span>'+groupNames[i]+'</li>'
+                stringList += '<a href="'+url+'"><li style="float: left; margin-right: 25px ;color: '+groupColors[i]+';"><span style="color: '+groupColors[i]+';">■</span>'+groupNames[i]+'</li></a>'
             }
             $('#group-list').html(stringList)
 

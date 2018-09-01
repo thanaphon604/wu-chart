@@ -74,6 +74,23 @@ app.get('/edit/:name', (req, res) => {
     })
 })
 
+app.get('/chart/:name/:groupNumber', (req, res) => {
+    Data.find({
+        chartName: req.params.name
+    }).then((d) => {
+        let hardData = []
+        for(let i=0;i<d[0].data.length;i++) {
+            if(''+d[0].data[i].groupNumber == req.params.groupNumber) {
+                hardData.push(d[0].data[i])
+            }
+        }
+        console.log('data is ', hardData)
+        res.send(hardData)
+    }, (e) => {
+        res.status(400).send(e)
+    })
+})
+
 // render chart by name 
 app.get('/chart/:name', (req, res) => {
     Data.find({chartName: req.params.name}).then((d) => {
