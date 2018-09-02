@@ -109,7 +109,7 @@
     
 
     <div id="main-show" class="container">
-        <div id="main-title" class="display-4">{{chartName}} : {{groupName}}</div>
+        <div id="main-title" class="display-4"></div>
         <hr id="after-main-title">
     </div>
 
@@ -123,6 +123,13 @@
 
     <script>
 
+        let chartName = "{{chartName}}";
+        let groupName = "{{groupName}}";
+
+        if(groupName.charAt(0) == '!') {
+            groupName = groupName.split('!')[1]
+        }
+        document.getElementById('main-title').innerHTML = chartName + ' : ' + groupName
         // Get the modal
         var modal = document.getElementById('myModal');
 
