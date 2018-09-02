@@ -114,7 +114,8 @@ app.get('/chart/:name/:groupNumber', (req, res) => {
             res.render('group.hbs', {
                 chartName: req.params.name,
                 groupName,
-                data: encodeURI(JSON.stringify(data))
+                data: encodeURI(JSON.stringify(data)),
+                color: doc[0].groupColors[req.params.groupNumber-1]
             })
         })
         
