@@ -127,20 +127,45 @@ app.get('/chart/:name/:groupNumber', (req, res) => {
 
 // render chart by name 
 app.get('/chart/:name', (req, res) => {
-    Data.find({chartName: req.params.name}).then((d) => {
-        console.log(d[0])
-        res.render('chart.hbs', {
-           chartName: d[0].chartName,
-           groupCount: d[0].groupCount,
-           fontSize: d[0].fontSize,
-           circleSize: d[0].circleSize,
-           groupNames: encodeURI(JSON.stringify(d[0].groupNames)),
-           groupColors: encodeURI(JSON.stringify(d[0].groupColors)),
-           data: encodeURI(JSON.stringify(d[0].data))
+    if (fs.existsSync('./views/'+req.params.name+'.json')){
+        console.log('found the file '+req.params.name+'.json file.')
+        Data.find({chartName: req.params.name}).then((d) => {
+            res.render('chart.hbs', {
+               chartName: d[0].chartName,
+               groupCount: d[0].groupCount,
+               fontSize: d[0].fontSize,
+               circleSize: d[0].circleSize,
+               groupNames: encodeURI(JSON.stringify(d[0].groupNames)),
+               groupColors: encodeURI(JSON.stringify(d[0].groupColors)),
+               data: encodeURI(JSON.stringify(d[0].data))
+            })
+        }, (e) => {
+            res.status(404).send(e)
         })
-    }, (e) => {
-        res.status(404).send(e)
-    })
+    }else {
+        console.log('is not found file, Sarver have to write '+req.params.name+'.json file!')
+        Data.find({chartName: req.params.name}).then((d) => {
+            let lastNameNumber = []
+            for(let i=0;i<d[0].groupCount;i++) {
+                if(d[0].groupNames[i].charAt(0) == '!') {
+                    lastNameNumber.push(i)
+                }
+            }
+            let _d = SortData(d[0].data, d[0].groupCount, lastNameNumber)
+            fs.writeFileSync("./views/"+req.params.name+".json", JSON.stringify(_d))
+            res.render('chart.hbs', {
+               chartName: d[0].chartName,
+               groupCount: d[0].groupCount,
+               fontSize: d[0].fontSize,
+               circleSize: d[0].circleSize,
+               groupNames: encodeURI(JSON.stringify(d[0].groupNames)),
+               groupColors: encodeURI(JSON.stringify(d[0].groupColors)),
+               data: encodeURI(JSON.stringify(d[0].data))
+            })
+        }, (e) => {
+            res.status(404).send(e)
+        })
+    }
 })
 
 app.post('/edit-data', upload.any(), (req, res) => {
