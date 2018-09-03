@@ -223,7 +223,7 @@
                             '<div style="margin-right: 35px;" id="main-show">'+
                             '</div>'+
                             '<div id="myPopup">'+
-                                '<img id="imgPopup" src="https://3.bp.blogspot.com/-FYjlw5lYV_Q/VCaXoNp-PTI/AAAAAAAAHmk/cLuCv4Ruq_U/s1600/37.jpg" class="img-thumbnail rounded">'
+                                '<img id="imgPopup" src="" class="img-thumbnail rounded">'+
                             '</div>'+
                         '</div>'
         }else {
@@ -231,11 +231,12 @@
                             '<div style="margin-right: 35px;" id="main-show">'+
                             '</div>'+
                             '<div id="myPopup">'+
-                                '<div style="display: flex; flex-direction: column; align-items: flex-end;">'+
+                                '<img id="imgPopup" src="" class="img-thumbnail rounded">'+
+                                {{!-- '<div style="display: flex; flex-direction: column; align-items: flex-end;">'+
                                     '<div style="display: flex">'+
                                         '<i id="openDocBtn" onclick="openDoc()" style="display: none; font-size: 25px; padding: 6px; color: #43A047; background-color: #fff; border-radius: 8px;" class="fas fa-file-alt"></i>'+
                                     '</div>'+
-                                '</div>'+
+                                '</div>'+ --}}
                             '</div>'+
                         '</div>'
         }
@@ -252,7 +253,9 @@
         img.onclick = function(){
             if(isCanClickModal) {
                 modal.style.display = "block";
-                let picPath = $('#myPopup').css('background-image')
+                {{!-- let picPath = $('#myPopup').css('background-image') --}}
+                let picPath = $('#imgPopup').attr('src');
+                
                 picPath = picPath.split('/uploads/')
                 picPath = picPath[1].split('")')
                 let url = "https://wu-chart.herokuapp.com/uploads/"+picPath[0]
@@ -411,7 +414,8 @@
                     $('#myPopup').attr("data-url", url)
                     $('#myPopup').attr("data-img", imgName)
                     let urlString = 'url("https://wu-chart.herokuapp.com/uploads/'+imgName+'")'
-                    $('#myPopup').css("background-image", urlString)
+                    {{!-- $('#myPopup').css("background-image", urlString) --}}
+                    $("#imgPopup").attr("src", urlString);
 
                     if(url!='https://www.google.co.th/') {
                         $('#openDocBtn').css('display', 'unset')
