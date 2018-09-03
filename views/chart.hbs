@@ -94,7 +94,7 @@
             width: 528px;
             height: 350px;
             background-color: #fff;
-            border: 1px solid #000;
+            border: 3px solid #000;
             border-radius: 8px;
             background-size: 100% 360px;
             background-position: center;
@@ -416,6 +416,9 @@
                     let urlString = "https://wu-chart.herokuapp.com/uploads/"+imgName
                     {{!-- $('#myPopup').css("background-image", urlString) --}}
                     $("#imgPopup").attr("src", urlString);
+
+                    $("#myPopup").css("width", "100px")
+                    $("#myPopup").css("height", "100px")
 
                     if(url!='https://www.google.co.th/') {
                         $('#openDocBtn').css('display', 'unset')
