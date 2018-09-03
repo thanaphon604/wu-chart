@@ -106,6 +106,7 @@
             display: table;
         }
 
+         /* Style the Image Used to Trigger the Modal */
         #myImg {
             border-radius: 5px;
             cursor: pointer;
@@ -129,7 +130,7 @@
             background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
         }
 
-        /* Modal Content (image) */
+        /* Modal Content (Image) */
         .modal-content {
             margin: auto;
             display: block;
@@ -137,7 +138,7 @@
             max-width: 700px;
         }
 
-        /* Caption of Modal Image */
+        /* Caption of Modal Image (Image Text) - Same Width as the Image */
         #caption {
             margin: auto;
             display: block;
@@ -149,17 +150,10 @@
             height: 150px;
         }
 
-        /* Add Animation */
-        .modal-content, #caption {    
-            -webkit-animation-name: zoom;
-            -webkit-animation-duration: 0.6s;
+        /* Add Animation - Zoom in the Modal */
+        .modal-content, #caption { 
             animation-name: zoom;
             animation-duration: 0.6s;
-        }
-
-        @-webkit-keyframes zoom {
-            from {-webkit-transform:scale(0)} 
-            to {-webkit-transform:scale(1)}
         }
 
         @keyframes zoom {
